@@ -31,6 +31,7 @@ public class BoardTestsExp {
     @Test
     public void testAdjacencyBottomRightCorner() {
         TestBoardCell cell = board.getCell(3, 3);
+        board.findAdj(cell);
         Set<TestBoardCell> adjList = cell.getAdjList();
         assertEquals(2, adjList.size());
         assertTrue(adjList.contains(board.getCell(3, 2)));
