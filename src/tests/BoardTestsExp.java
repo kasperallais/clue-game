@@ -62,7 +62,6 @@ public class BoardTestsExp {
     @Test
     public void testCalcTargetsNormal() {
         TestBoardCell cell = board.getCell(2, 2);
-        board.findAdj(cell);
         board.calcTargets(cell, 2);
         Set<TestBoardCell> targets = board.getTargets();
         assertEquals(6, targets.size());
@@ -70,23 +69,23 @@ public class BoardTestsExp {
         assertTrue(targets.contains(board.getCell(3, 1)));
     }
 
-//    @Test
-//    public void testCalcTargetsWithOccupied() {
-//        TestBoardCell cell = board.getCell(2, 2);
-//        TestBoardCell occupiedCell = board.getCell(2, 3);
-//        occupiedCell.setOccupied(true);
-//        board.calcTargets(cell, 1);
-//        Set<TestBoardCell> targets = board.getTargets();
-//        assertFalse(targets.contains(occupiedCell));
-//    }
+    @Test
+    public void testCalcTargetsWithOccupied() {
+        TestBoardCell cell = board.getCell(2, 2);
+        TestBoardCell occupiedCell = board.getCell(2, 3);
+        occupiedCell.setOccupied(true);
+        board.calcTargets(cell, 1);
+        Set<TestBoardCell> targets = board.getTargets();
+        assertFalse(targets.contains(occupiedCell));
+    }
 
-//    @Test
-//    public void testCalcTargetsWithRoom() {
-//        TestBoardCell cell = board.getCell(2, 2);
-//        TestBoardCell roomCell = board.getCell(3, 3);
-//        roomCell.setRoom(true);
-//        board.calcTargets(cell, 2);
-//        Set<TestBoardCell> targets = board.getTargets();
-//        assertTrue(targets.contains(roomCell));
-//    }
+    @Test
+    public void testCalcTargetsWithRoom() {
+        TestBoardCell cell = board.getCell(2, 2);
+        TestBoardCell roomCell = board.getCell(3, 3);
+        roomCell.setRoom(true);
+        board.calcTargets(cell, 2);
+        Set<TestBoardCell> targets = board.getTargets();
+        assertTrue(targets.contains(roomCell));
+    }
 }

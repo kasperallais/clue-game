@@ -54,7 +54,7 @@ public class TestBoard {
 				continue;
 			}
 			visited.add(cell);
-			if (pathLength == 1) {
+			if (pathLength == 1 && !(cell.getOccupied())) {
 				targets.add(cell);
 			}else {
 				calcTargets(cell, (pathLength-1));
