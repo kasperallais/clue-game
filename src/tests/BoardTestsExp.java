@@ -71,12 +71,15 @@ public class BoardTestsExp {
 
     @Test
     public void testCalcTargetsWithOccupied() {
-        TestBoardCell cell = board.getCell(2, 2);
-        TestBoardCell occupiedCell = board.getCell(2, 3);
+        TestBoardCell cell = board.getCell(0, 3);
+        TestBoardCell occupiedCell = board.getCell(1, 3);
         occupiedCell.setOccupied(true);
-        board.calcTargets(cell, 1);
+        board.calcTargets(cell, 3);
         Set<TestBoardCell> targets = board.getTargets();
         assertFalse(targets.contains(occupiedCell));
+        assertTrue(targets.contains(board.getCell(0, 0)));
+        assertTrue(targets.contains(board.getCell(1, 1)));
+        assertTrue(targets.contains(board.getCell(2, 2)));
     }
 
     @Test
@@ -88,4 +91,14 @@ public class BoardTestsExp {
         Set<TestBoardCell> targets = board.getTargets();
         assertTrue(targets.contains(roomCell));
     }
+    
+    @Test
+    public void testTargetRoom() {
+    	board.getCell(1, 3).setRoom(true);
+    	TestBoardCell cell = board.getCell(0, 3);
+    	board.calcTargets(cell, 3);
+    	Set<TestBoardCell> targets = board.getTargets();
+    	assertEquals(4, targets.size());
+    	
+    } 
 }

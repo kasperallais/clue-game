@@ -11,24 +11,20 @@ public class TestBoard {
 	final static int ROWS = 4;
 
 	public TestBoard() {
+		// init sets and arrays
 		targets = new HashSet<>();
 		grid = new TestBoardCell[ROWS][COLS];
 		visited = new HashSet<>();
+		// fill grid with board cells
 		for (int i = 0; i < ROWS; i++) {
-
 			for (int j = 0; j < COLS; j++) {
-
 				grid[i][j] = new TestBoardCell(i,j);
-
 			}
 		}
 	}
 
-	//    public void findAllTarget(TestBoardCell thisCell, int numSteps) {
-		//    	
-		//    }
-
 	public void findAdj(TestBoardCell thisCell) {
+		// check to see if there are adjacent cells without going out of bounds
 		int row = thisCell.getRow();
 		int col = thisCell.getCol();
 		if (row - 1 >= 0) {
@@ -46,17 +42,21 @@ public class TestBoard {
 	}
 
 	public void calcTargets(TestBoardCell startCell, int pathLength) {
+		// Find adjacent cells of paramter cell each time
 		findAdj(startCell);
+		// get the adjacent cell list
 		Set<TestBoardCell> adjlist = startCell.getAdjList();
+		// add the parameter cell to visited
 		visited.add(startCell);
 		for (TestBoardCell cell: adjlist) {
 			if (visited.contains(cell)) {
 				continue;
 			}
 			visited.add(cell);
+			// make sure cell is not occupied
 			if (pathLength == 1 && !(cell.getOccupied())) {
 				targets.add(cell);
-			}else {
+			}else if (!cell.isRoom()) {
 				calcTargets(cell, (pathLength-1));
 			}
 			visited.remove(cell);
