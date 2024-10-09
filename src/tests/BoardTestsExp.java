@@ -41,6 +41,7 @@ public class BoardTestsExp {
     @Test
     public void testAdjacencyRightEdge() {
         TestBoardCell cell = board.getCell(1, 3);
+        board.findAdj(cell);
         Set<TestBoardCell> adjList = cell.getAdjList();
         assertEquals(3, adjList.size());
         assertTrue(adjList.contains(board.getCell(0, 3)));
@@ -51,11 +52,11 @@ public class BoardTestsExp {
     @Test
     public void testAdjacencyLeftEdge() {
         TestBoardCell cell = board.getCell(3, 0);
+        board.findAdj(cell);
         Set<TestBoardCell> adjList = cell.getAdjList();
-        assertEquals(3, adjList.size());
+        assertEquals(2, adjList.size());
         assertTrue(adjList.contains(board.getCell(2, 0)));
         assertTrue(adjList.contains(board.getCell(3, 1)));
-        assertTrue(adjList.contains(board.getCell(2, 0)));
     }
 
     @Test
