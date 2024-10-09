@@ -19,6 +19,7 @@ public class BoardTestsExp {
 
     @Test
     public void testAdjacencyTopLeftCorner() {
+    	System.out.println("Check");
         TestBoardCell cell = board.getCell(0, 0);
         Set<TestBoardCell> adjList = cell.getAdjList();
         assertEquals(2, adjList.size());
@@ -63,7 +64,6 @@ public class BoardTestsExp {
         assertEquals(6, targets.size());
         assertTrue(targets.contains(board.getCell(0, 2)));
         assertTrue(targets.contains(board.getCell(4, 2)));
-        // Add more assertions as needed
     }
 
     @Test
@@ -74,7 +74,6 @@ public class BoardTestsExp {
         board.calcTargets(cell, 1);
         Set<TestBoardCell> targets = board.getTargets();
         assertFalse(targets.contains(occupiedCell));
-        // Add more assertions as needed
     }
 
     @Test
@@ -85,6 +84,5 @@ public class BoardTestsExp {
         board.calcTargets(cell, 2);
         Set<TestBoardCell> targets = board.getTargets();
         assertTrue(targets.contains(roomCell));
-        // Add more assertions as needed
     }
 }
