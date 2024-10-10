@@ -56,9 +56,12 @@ public class TestBoard {
 			// make sure cell is not occupied
 			if (pathLength == 1 && !(cell.getOccupied())) {
 				targets.add(cell);
-			}else if (!cell.isRoom()) {
+			}else if (!cell.isRoom() && !(cell.getOccupied())) {
 				calcTargets(cell, (pathLength-1));
+			}else if (cell.isRoom()) {
+				targets.add(cell);
 			}
+			
 			visited.remove(cell);
 		}
 		

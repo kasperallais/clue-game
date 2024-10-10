@@ -99,6 +99,15 @@ public class BoardTestsExp {
     	board.calcTargets(cell, 3);
     	Set<TestBoardCell> targets = board.getTargets();
     	assertEquals(4, targets.size());
-    	
+    } 
+    
+    @Test
+    public void testTargetMixed() {
+    	board.getCell(1, 2).setRoom(true);
+    	board.getCell(0, 2).setOccupied(true);
+    	TestBoardCell cell = board.getCell(0, 3);
+    	board.calcTargets(cell, 3);
+    	Set<TestBoardCell> targets = board.getTargets();
+    	assertEquals(3, targets.size());
     } 
 }
