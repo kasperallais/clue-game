@@ -5,15 +5,19 @@ public class Room {
     private BoardCell centerCell;
     private BoardCell labelCell;
 
+    public Room(String name) {
+        this.name = name;
+    }
+
     public String getName() {
-        return name;
+        return name; // Placeholder for getting the room name
     }
 
     public BoardCell getCenterCell() {
-        return centerCell;
+        return centerCell; // Placeholder for center cell
     }
 
     public BoardCell getLabelCell() {
-        return labelCell;
+        return labelCell; // Placeholder for label cell
     }
 }
