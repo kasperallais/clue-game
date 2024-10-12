@@ -1,0 +1,13 @@
+// Rooms and room cards
+Room, Library of Secrets, L
+Room, Enchanted Garden, G
+Room, Shadow Study, S
+Room, Ballroom of Echoes, B
+Room, The velvet Lounge, V
+Room, The Gloomy Cellar, C
+Room, The Hall of Mirrors, M
+Room, The Crimson Parlor, P
+Room, The Observatory Tower, O
+// other spaces on board
+Space, Unused, X
+Space, Walkway, W
