@@ -1,0 +1,9 @@
+Library of Secrets has a door that opens UP
+Enchanted Garden open RIGHT
+Shadow Study has a door that opens RIGHT 
+Ballroom of Echoes has a door that opens DOWN
+Velvet Lounge has a door that opens RIGHT
+Gloomy Cellar has a door that opens DOWN
+Hall of Mirrors has a door that opens LEFT
+Crimson Parlor has a door that opens LEFT
+Observatory Tower has a door that DOWN
