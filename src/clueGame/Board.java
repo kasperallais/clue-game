@@ -29,6 +29,7 @@ public class Board {
 	final static int ROWS = 4;
 	private int numberRows;
 	private int numberCols;
+	private HashMap<Character, String> legendMap = new HashMap<Character, String>();
 
 	private Board() {
 		// Private constructor for Singleton pattern
@@ -114,6 +115,7 @@ public class Board {
 					Room room = new Room(roomName);
 					room.setInitial(roomInitial);
 					roomMap.put(roomInitial, room);
+					legendMap.put(roomInitial, roomName);
 				} else if (parts.length == 3 && parts[0].equals("Space")) {
 					String spaceName = parts[1];
 					char spaceInitial = parts[2].charAt(0);
@@ -163,7 +165,6 @@ public class Board {
 						Room room = roomMap.get(cellInitial);
 						cell.setRoom(true);
 						cell.setRoomName(room.getName());
-
 						// Check for special characters for doorways, labels, centers
 						if (rowCells[col].contains("#")) {
 							cell.setLabel(true);
@@ -176,21 +177,15 @@ public class Board {
 						
 						// Set doorway direction based on characters like ^, v, <, >
 						if (rowCells[col].contains("^")) {
-							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.UP);
-							System.out.println("Check^");
 						} else if (rowCells[col].contains("v")) {
-							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.DOWN);
-							
 						} else if (rowCells[col].contains("<")) {
-							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.LEFT);
 						} else if (rowCells[col].contains(">")) {
-							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.RIGHT);
 						}
@@ -203,7 +198,12 @@ public class Board {
 						
 					} else if (cellInitial == 'W') {
 						cell.setWalkway(true);
-					} 
+					} else if (cellInitial == 'X') {
+						continue;
+					}
+					else if(!(legendMap.containsKey(cellInitial))) {
+						throw new BadConfigFormatException("Invalid Layout");
+					}
 
 					grid[row][col] = cell;
 				}
