@@ -1,6 +1,7 @@
 package clueGame;
 
 public class Room {
+	private char initial;
     private String name;
     private BoardCell centerCell;
     private BoardCell labelCell;
@@ -19,5 +20,17 @@ public class Room {
 
     public BoardCell getLabelCell() {
         return labelCell; // Placeholder for label cell
+    }
+    
+    public void setInitial(char newinit) {
+    	this.initial = newinit;
+    }
+    
+    public void setCenterCell(BoardCell cell) {
+    	this.centerCell = cell;
+    }
+    
+    public void setLabelCell(BoardCell cell) {
+    	this.labelCell = cell;
     }
 }

@@ -1,5 +1,56 @@
-I, Kasper Allais, certify that I participated equitably in the creation of assignment C14A-1, dated 10/9/2024.
-I, Michael Tetreault, certify that I participated equitably in the creation of this assignment C14A-1, dated 10/9/2024.
+commit 1597c3b2b0cd8716bc5bef0f939f26aecbca011d
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 18:28:16 2024 -0600
+
+    Added Tests.txt and changed tests to fit more closely with requirements
+
+commit 47f39f29d2ff0ae7517713413da853ad7acc4c27
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 18:27:46 2024 -0600
+
+    Fixed ClueSetup
+
+commit 361ad7d6531c63a036a4b407ed713bcafd884619
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 18:27:21 2024 -0600
+
+    Modified classes to avoid NullPointerException
+
+commit b3b33063a6fe7785244d3285824b74c61efbd273
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:29:27 2024 -0600
+
+    Created BadConfigFormatException
+
+commit 58c26cd04be8a4f839513fd213c18b271984c0ff
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:28:58 2024 -0600
+
+    Created DoorDirection Class
+
+commit f421fdc2a9114477cf478ea81e71ffd9a3675b94
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:28:23 2024 -0600
+
+    Created Room Class (placeholder)
+
+commit 9f873dde01060747b974da23494de002ab8fd418
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:27:54 2024 -0600
+
+    Created BoardCell Class (placeholder)
+
+commit be0f4473f7724213382f3f0b26b1f08b91a86d82
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:27:23 2024 -0600
+
+    Created Board Class and filled in with placeholder methods
+
+commit b7a8ed94bdf3a59a6844335e228c0b6a201ceee2
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Oct 11 09:10:43 2024 -0600
+
+    Added files in ClueInitFiles.zip and ClueLayout.csv | ClueSetup.txt
 
 commit 5151b842c44528c0651a38b916ecb80fed403a5d
 Author: “Michael <“michael_tetreault@mines.edu”>
