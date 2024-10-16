@@ -40,11 +40,8 @@ public class Board {
 
 	public void initialize() {
 		try {
-			System.out.println("Checl");
 			loadSetupConfig();
-			System.out.println("Checl2");
 			loadLayoutConfig();
-			System.out.println("Checl");
 		} catch (BadConfigFormatException e) {
 			System.out.println("Unable to initialize the board");
 		}
@@ -101,9 +98,8 @@ public class Board {
 
 	public void loadSetupConfig() throws BadConfigFormatException {
 		try {
-			File file = new File("data/" + setupConfigFile);
+			File file = new File(setupConfigFile);
 			Scanner reader = new Scanner(file);
-			System.out.println("Checl");
 			roomMap = new HashMap<>();
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine().trim();
@@ -114,7 +110,6 @@ public class Board {
 
 				if (parts.length == 3 && parts[0].equals("Room")) {
 					String roomName = parts[1];
-					System.out.println(roomName);
 					char roomInitial = parts[2].charAt(0);
 					Room room = new Room(roomName);
 					room.setInitial(roomInitial);
@@ -129,7 +124,6 @@ public class Board {
 					throw new BadConfigFormatException("Invalid setup config format");
 				}
 			}
-			System.out.println("Checl2");
 			reader.close();
 		} catch (FileNotFoundException e) {
 			throw new BadConfigFormatException("Setup config file not found");
@@ -138,17 +132,15 @@ public class Board {
 
 	public void loadLayoutConfig() throws BadConfigFormatException {
 		try {
-			File file = new File("data/" + layoutConfigFile);
+			File file = new File(layoutConfigFile);
 			Scanner reader = new Scanner(file);
 			List<String[]> lines = new ArrayList<>();
-
 			while (reader.hasNextLine()) {
 				String line = reader.nextLine().trim();
 				String[] cells = line.split(",");
 				lines.add(cells);
 			}
 			reader.close();
-
 			// Set the dimensions of the board
 			numRows = lines.size();
 			this.numberRows = numRows;
@@ -184,15 +176,21 @@ public class Board {
 						
 						// Set doorway direction based on characters like ^, v, <, >
 						if (rowCells[col].contains("^")) {
+							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.UP);
+							System.out.println("Check^");
 						} else if (rowCells[col].contains("v")) {
+							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.DOWN);
+							
 						} else if (rowCells[col].contains("<")) {
+							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.LEFT);
 						} else if (rowCells[col].contains(">")) {
+							System.out.println("Check Door");
 							cell.setDoorway(true);
 							cell.setDoorDirection(DoorDirection.RIGHT);
 						}
