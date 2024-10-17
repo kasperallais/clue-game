@@ -1,3 +1,24 @@
+I, Kasper Allais, certify that I participated equitably in the creation of assignment C15A-1, dated 10/16/2024.
+I, Michael Tetreault, certify that I participated equitably in the creation of this assignment C15A-1, dated 10/16/2024.
+
+commit c3c7bff92bdc1e812c6b6e66a9ba165b446dc98d
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Oct 16 17:03:59 2024 -0600
+
+    Passed All tests
+
+commit 622135074052c64431f3bb38a5764eed39d1a196
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Oct 16 16:32:53 2024 -0600
+
+    Passed almost all tests
+
+commit a4431de5e1f4cdbea7c579465d8853303e62566a
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Oct 16 15:54:25 2024 -0600
+
+    Passed most tests with files
+
 commit 1597c3b2b0cd8716bc5bef0f939f26aecbca011d
 Author: kasperallais <kasper.allais@gmail.com>
 Date:   Fri Oct 11 18:28:16 2024 -0600
