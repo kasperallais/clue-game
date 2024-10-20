@@ -1,13 +1,19 @@
 package clueGame;
+import java.util.ArrayList;
 
 public class Room {
 	private char initial;
     private String name;
     private BoardCell centerCell;
     private BoardCell labelCell;
+    private ArrayList<BoardCell> doorCells;
+    private BoardCell doorWayCell;
+    private BoardCell secretPassageCell;
+    private boolean hasSecretPassage;
 
     public Room(String name) {
         this.name = name;
+        this.doorCells = new ArrayList<BoardCell>();
     }
 
     public String getName() {
@@ -32,5 +38,29 @@ public class Room {
     
     public void setLabelCell(BoardCell cell) {
     	this.labelCell = cell;
+    }
+    
+    public void setDoorwayCell(BoardCell cell) {
+    	this.doorCells.add(cell);
+    }
+    
+    public ArrayList<BoardCell> getDoorCells() {
+    	return this.doorCells;
+    }
+    
+    public void setSecretPassageCell(BoardCell cell) {
+    	this.secretPassageCell = cell;
+    }
+    
+    public BoardCell getSecretPassageCell() {
+    	return this.secretPassageCell;
+    }
+    
+    public void setSecretPassage(boolean isPassage) {
+    	this.hasSecretPassage = isPassage;
+    }
+    
+    public boolean getSecretPassage() {
+    	return this.hasSecretPassage;
     }
 }

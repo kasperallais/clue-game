@@ -17,7 +17,7 @@ public class BoardCell {
     private DoorDirection doorDirection;
     private boolean roomLabel;
     private boolean roomCenter;
-    private char secretPassage;
+    private char secretPassage = ' ';
     private Set<BoardCell> adjList;
 
     public BoardCell(int row, int col) {
@@ -64,6 +64,10 @@ public class BoardCell {
     
     public boolean getOccupied() {
         return isOccupied;
+    }
+    
+    public void setOccupied(boolean occupied) {
+        this.isOccupied = occupied;
     }
     
     public void setRoomName(String name) {
@@ -117,5 +121,6 @@ public class BoardCell {
 	public void setSecretPassage(char letter) {
 		this.secretPassage = letter;
 	}
+	
 	
 }

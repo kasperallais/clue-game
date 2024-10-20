@@ -29,6 +29,7 @@ public class Board {
 	final static int ROWS = 4;
 	private int numberRows;
 	private int numberCols;
+	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<BoardCell, Set<BoardCell>>();
 	private HashMap<Character, String> legendMap = new HashMap<Character, String>();
 
 	private Board() {
@@ -43,26 +44,93 @@ public class Board {
 		try {
 			loadSetupConfig();
 			loadLayoutConfig();
+			findAdj();
+			visited = new HashSet<BoardCell>();
+			targets = new HashSet<BoardCell>();
 		} catch (BadConfigFormatException e) {
 			System.out.println("Unable to initialize the board");
 		}
 	}
 
-	public void findAdj(BoardCell thisCell) {
+	public void findAdj() {
 		// check to see if there are adjacent cells without going out of bounds
-		int row = thisCell.getRow();
-		int col = thisCell.getCol();
-		if (row - 1 >= 0) {
-			thisCell.addAdj(grid[(row-1)][col]);
-		}
-		if (row + 1 < ROWS) {
-			thisCell.addAdj(grid[(row+1)][col]);
-		}
-		if (col - 1 >= 0) {
-			thisCell.addAdj(grid[row][(col-1)]);
-		}
-		if (col + 1 < COLS) {
-			thisCell.addAdj(grid[row][(col+1)]);
+		for (int i = 0; i < numberRows; i++) {
+			for (int j = 0; j < numberCols; j++) {
+				Set<BoardCell> tmp = new HashSet<BoardCell>();
+				if (getCell(i,j).isDoorway()) {
+					if (i+1 < numberRows && getCell(i+1,j).isWalkway()) {
+						tmp.add(getCell(i+1,j));
+					}
+					if (i-1 >= 0 && getCell(i-1,j).isWalkway()) {
+						tmp.add(getCell(i-1,j));
+					}
+					if (j+1 < numberCols && getCell(i,j+1).isWalkway()) {
+						tmp.add(getCell(i,j+1));
+					}
+					if (j-1 >= 0 && getCell(i,j-1).isWalkway()) {
+						tmp.add(getCell(i,j-1));
+					}
+					
+					if (getCell(i,j).getDoorDirection().equals(DoorDirection.DOWN)) {
+						if (getCell(i+1, j).getInitial() != 'X' && getCell(i+1, j).getInitial() != 'W'){
+							char init = getCell(i+1,j).getInitial();
+							BoardCell cell = roomMap.get(init).getCenterCell();
+							tmp.add(cell);
+						}
+					}
+					else if (getCell(i,j).getDoorDirection().equals(DoorDirection.UP)) {
+						if (getCell(i-1, j).getInitial() != 'X' && getCell(i-1, j).getInitial() != 'W'){
+							char init = getCell(i-1,j).getInitial();
+							BoardCell cell = roomMap.get(init).getCenterCell();
+							tmp.add(cell);
+						}
+					}
+					else if (getCell(i,j).getDoorDirection().equals(DoorDirection.RIGHT)) {
+						if (getCell(i, j+1).getInitial() != 'X' && getCell(i, j+1).getInitial() != 'W'){
+							char init = getCell(i,j+1).getInitial();
+							BoardCell cell = roomMap.get(init).getCenterCell();
+							tmp.add(cell);
+						}
+					}
+					else if (getCell(i,j).getDoorDirection().equals(DoorDirection.LEFT)) {
+						if (getCell(i, j-1).getInitial() != 'X' && getCell(i, j-1).getInitial() != 'W'){
+							char init = getCell(i,j-1).getInitial();
+							BoardCell cell = roomMap.get(init).getCenterCell();
+							tmp.add(cell);
+						}
+					}
+				}
+				else if (getCell(i, j).isWalkway()) {
+					if (i+1 < numberRows && grid[i+1][j].getInitial() != 'X' && grid[i+1][j].isWalkway()) {
+						tmp.add(getCell(i+1, j));
+					}
+					if (i-1 >= 0 && grid[i-1][j].getInitial() != 'X' && grid[i-1][j].isWalkway()) {
+						tmp.add(getCell(i-1, j));
+					}
+					if (j+1 < numberCols && grid[i][j+1].getInitial() != 'X' && grid[i][j+1].isWalkway()) {
+						tmp.add(getCell(i, j+1));
+					}
+					if (j-1 >= 0 && grid[i][j-1].getInitial() != 'X' && grid[i][j-1].isWalkway()) {
+						tmp.add(getCell(i, j-1));
+					}
+				}
+				if (!grid[i][j].isWalkway() && !grid[i][j].isDoorway()) {
+					 // Check for adjacent doorways that lead into this room
+					Room tempRoom = roomMap.get(grid[i][j].getInitial());
+					if (tempRoom.getSecretPassage()) {
+						BoardCell passageCell = tempRoom.getSecretPassageCell();
+						tmp.add(passageCell);
+					}
+					
+					ArrayList<BoardCell> temp = tempRoom.getDoorCells();
+					for (int z = 0; z < temp.size(); z++) {
+						BoardCell tempCell = temp.get(z);
+						tmp.add(tempCell);
+					}
+				}
+				
+			adjList.put(getCell(i,j), tmp);
+			}
 		}
 	}
 
@@ -93,6 +161,11 @@ public class Board {
 		return numberCols; // Placeholder value
 	}
 
+    public Set<BoardCell> getAdjList(int row, int col) {
+    	return adjList.get(getCell(row, col));
+    	
+    }
+	
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}
@@ -175,6 +248,10 @@ public class Board {
 							room.setCenterCell(cell);
 						}
 						
+						if (rowCells[col].charAt(0) == 'W') {
+							cell.setWalkway(true);
+						}
+						
 						// Set doorway direction based on characters like ^, v, <, >
 						if (rowCells[col].contains("^")) {
 							cell.setDoorway(true);
@@ -212,17 +289,51 @@ public class Board {
 		} catch (FileNotFoundException e) {
 			throw new BadConfigFormatException("Layout config file not found");
 		}
+		
+		for (int i = 0; i < numberRows; i++) {
+			for (int j = 0; j < numberCols; j++) {
+				BoardCell doorCell = grid[i][j];
+				if (doorCell.isDoorway()) {
+					if (doorCell.getDoorDirection().equals(DoorDirection.UP)) {
+						Room myRoom = roomMap.get(grid[i-1][j].getInitial());
+						myRoom.setDoorwayCell(doorCell);
+					}
+					if (doorCell.getDoorDirection().equals(DoorDirection.DOWN)) {
+						Room myRoom = roomMap.get(grid[i+1][j].getInitial());
+						myRoom.setDoorwayCell(doorCell);
+					}
+					if (doorCell.getDoorDirection().equals(DoorDirection.LEFT)) {
+						Room myRoom = roomMap.get(grid[i][j-1].getInitial());
+						myRoom.setDoorwayCell(doorCell);
+					}
+					if (doorCell.getDoorDirection().equals(DoorDirection.RIGHT)) {
+						Room myRoom = roomMap.get(grid[i][j+1].getInitial());
+						myRoom.setDoorwayCell(doorCell);
+					}
+				}
+				if (doorCell.getSecretPassage() != ' ') {
+					char passageRoom = grid[i][j].getSecretPassage();
+					char ogRoom = grid[i][j].getInitial();
+					Room theOGRoom = roomMap.get(ogRoom);
+					Room tempRoom = roomMap.get(passageRoom);
+					theOGRoom.setSecretPassageCell(tempRoom.getCenterCell());
+					theOGRoom.setSecretPassage(true);
+				}
+			}
+		}
 	}
 	
-	
-	
-	
-
+    public Set<BoardCell> getTargets() {
+        return targets;
+    }
+    
 	public void calcTargets(BoardCell startCell, int pathLength) {
 		// Find adjacent cells of paramter cell each time
-		findAdj(startCell);
+		//findAdj();
 		// get the adjacent cell list
-		Set<BoardCell> adjlist = startCell.getAdjList();
+		int row = startCell.getRow();
+		int col = startCell.getCol();
+		Set<BoardCell> adjlist = getAdjList(row,col);
 		// add the parameter cell to visited
 		visited.add(startCell);
 		for (BoardCell cell: adjlist) {
@@ -230,13 +341,18 @@ public class Board {
 				continue;
 			}
 			visited.add(cell);
-			// make sure cell is not occupied
 			if (pathLength == 1 && !(cell.getOccupied())) {
+//				System.out.println("Check!!!");
+//				System.out.println(cell.getRow() + " " + cell.getCol());
 				targets.add(cell);
-			}else if (!cell.isRoom() && !(cell.getOccupied())) {
+			}else if (cell.getInitial() == 'W' && !(cell.getOccupied())) {
 				calcTargets(cell, (pathLength-1));
-			}else if (cell.isRoom()) {
-				targets.add(cell);
+			}else if (cell.getInitial() != 'W' && cell.getInitial() != 'X') {
+				char init = cell.getInitial();
+				BoardCell temp = roomMap.get(init).getCenterCell();
+				if (!targets.contains(temp)) {
+					targets.add(temp);
+				}
 			}
 
 			visited.remove(cell);
