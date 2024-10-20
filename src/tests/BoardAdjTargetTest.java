@@ -1,14 +1,18 @@
 package tests;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
-
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-
+import org.junit.jupiter.api.Test;
 import clueGame.Board;
 import clueGame.BoardCell;
+
+
 
 public class BoardAdjTargetTest {
 
@@ -16,14 +20,18 @@ public class BoardAdjTargetTest {
 
     @BeforeAll
     public static void setUp() {
+    	System.out.println("Bruh");
         board = Board.getInstance();
         board.setConfigFiles("ClueLayout.csv", "ClueSetup.txt");
         board.initialize();
+        System.out.println("For real?");
     }
 
     // LIGHT ORANGE
     @Test
     public void testAdjacenciesRooms() {
+    	System.out.println("Check");
+
         // Library of Secrets (Single Door, secret Passage)
         Set<BoardCell> testList = board.getAdjList(2, 2);  // Library of Secrets
         assertEquals(2, testList.size());
