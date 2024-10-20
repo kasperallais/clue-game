@@ -45,8 +45,6 @@ public class Board {
 			loadSetupConfig();
 			loadLayoutConfig();
 			findAdj();
-			visited = new HashSet<BoardCell>();
-			targets = new HashSet<BoardCell>();
 		} catch (BadConfigFormatException e) {
 			System.out.println("Unable to initialize the board");
 		}
@@ -327,9 +325,16 @@ public class Board {
         return targets;
     }
     
-	public void calcTargets(BoardCell startCell, int pathLength) {
+    public void calcTargets(BoardCell startCell, int pathLength) {
+    	visited = new HashSet<BoardCell>();
+		targets = new HashSet<BoardCell>();
+		findAllTargets(startCell, pathLength);
+		
+    }
+	public void findAllTargets(BoardCell startCell, int pathLength) {
 		// Find adjacent cells of paramter cell each time
 		//findAdj();
+		
 		// get the adjacent cell list
 		int row = startCell.getRow();
 		int col = startCell.getCol();
@@ -342,11 +347,9 @@ public class Board {
 			}
 			visited.add(cell);
 			if (pathLength == 1 && !(cell.getOccupied())) {
-//				System.out.println("Check!!!");
-//				System.out.println(cell.getRow() + " " + cell.getCol());
 				targets.add(cell);
 			}else if (cell.getInitial() == 'W' && !(cell.getOccupied())) {
-				calcTargets(cell, (pathLength-1));
+				findAllTargets(cell, (pathLength-1));
 			}else if (cell.getInitial() != 'W' && cell.getInitial() != 'X') {
 				char init = cell.getInitial();
 				BoardCell temp = roomMap.get(init).getCenterCell();

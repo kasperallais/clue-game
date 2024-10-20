@@ -57,9 +57,7 @@ public class BoardAdjTargetTest306 {
 	@Test
 	public void testAdjacencyDoor()
 	{
-		Set<BoardCell> testList = board.getAdjList(11, 1);
-		System.out.println("Check     ======================");
-		
+		Set<BoardCell> testList = board.getAdjList(11, 1);		
 		assertEquals(2, testList.size());
 		assertTrue(testList.contains(board.getCell(14, 2)));
 		assertTrue(testList.contains(board.getCell(11, 2)));
@@ -264,7 +262,6 @@ public class BoardAdjTargetTest306 {
 		board.calcTargets(board.getCell(13, 7), 4);
 		board.getCell(15, 7).setOccupied(false);
 		Set<BoardCell> targets = board.getTargets();
-		//System.out.println("Next!!!!!!!!!!!!!!!!!!!!!!!");
 		assertEquals(13, targets.size());
 		
 		assertTrue(targets.contains(board.getCell(14, 2)));
@@ -273,7 +270,6 @@ public class BoardAdjTargetTest306 {
 		assertFalse( targets.contains( board.getCell(15, 7))) ;
 		assertFalse( targets.contains( board.getCell(17, 7))) ;
 		
-		System.out.println("END GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
 		// we want to make sure we can get into a room, even if flagged as occupied
 		board.getCell(12, 20).setOccupied(true);
 		board.getCell(8, 18).setOccupied(true);
