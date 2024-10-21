@@ -322,14 +322,12 @@ public class Board {
 	}
 	
     public Set<BoardCell> getTargets() {
-    	System.out.println(targets.size());
         return targets;
     }
     
     public void calcTargets(BoardCell startCell, int pathLength) {
     	visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
-		System.out.println("Check");
 		findAllTargets(startCell, pathLength);
 		
     }
@@ -343,18 +341,12 @@ public class Board {
 		Set<BoardCell> adjlist = getAdjList(row,col);
 		// add the parameter cell to visited
 		visited.add(startCell);
-		System.out.println("peep ee22222");
-
 		for (BoardCell cell: adjlist) {
 			if (visited.contains(cell)) {
-				System.out.println("peep ee");
-
 				continue;
 			}
 			visited.add(cell);
-			System.out.println("peep ee");
 			if (pathLength == 1 && !(cell.getOccupied())) {
-				System.out.println("Double CHeck");
 				targets.add(cell);
 			}else if (cell.getInitial() == 'W' && !(cell.getOccupied())) {
 				findAllTargets(cell, (pathLength-1));
