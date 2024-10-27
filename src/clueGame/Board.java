@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 
-//import experiment.TestBoardCell;
-
 public class Board {
 
 	private static Board theInstance = new Board();
@@ -29,10 +27,6 @@ public class Board {
 	private int numberCols;
 	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<BoardCell, Set<BoardCell>>();
 	private HashMap<Character, String> legendMap = new HashMap<Character, String>();
-
-	private Board() {
-		// Private constructor for Singleton pattern
-	}
 
 	public static Board getInstance() {
 		return theInstance;

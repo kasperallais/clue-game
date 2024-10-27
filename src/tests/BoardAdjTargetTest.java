@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import clueGame.Board;
 import clueGame.BoardCell;
 
-
-
 public class BoardAdjTargetTest {
 
     private static Board board;
