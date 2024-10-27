@@ -163,33 +163,34 @@ public class Board {
 	public void loadSetupConfig() throws BadConfigFormatException {
 		try {
 			File file = new File(setupConfigFile);
-			Scanner reader = new Scanner(file);
-			roomMap = new HashMap<>();
-			while (reader.hasNextLine()) {
-				String line = reader.nextLine().trim();
-				if (line.startsWith("//") || line.isEmpty()) {
-					continue;
-				}
-				String[] parts = line.split(",\\s*");
+			try (Scanner reader = new Scanner(file)) {
+				roomMap = new HashMap<>();
+				while (reader.hasNextLine()) {
+					String line = reader.nextLine().trim();
+					if (line.startsWith("//") || line.isEmpty()) {
+						continue;
+					}
+					String[] parts = line.split(",\\s*");
 
-				if (parts.length == 3 && parts[0].equals("Room")) {
-					String roomName = parts[1];
-					char roomInitial = parts[2].charAt(0);
-					Room room = new Room(roomName);
-					room.setInitial(roomInitial);
-					roomMap.put(roomInitial, room);
-					legendMap.put(roomInitial, roomName);
-				} else if (parts.length == 3 && parts[0].equals("Space")) {
-					String spaceName = parts[1];
-					char spaceInitial = parts[2].charAt(0);
-					Room space = new Room(spaceName);
-					space.setInitial(spaceInitial);
-					roomMap.put(spaceInitial, space);
-				} else {
-					throw new BadConfigFormatException("Invalid setup config format");
+					if (parts.length == 3 && parts[0].equals("Room")) {
+						String roomName = parts[1];
+						char roomInitial = parts[2].charAt(0);
+						Room room = new Room(roomName);
+						room.setInitial(roomInitial);
+						roomMap.put(roomInitial, room);
+						legendMap.put(roomInitial, roomName);
+					} else if (parts.length == 3 && parts[0].equals("Space")) {
+						String spaceName = parts[1];
+						char spaceInitial = parts[2].charAt(0);
+						Room space = new Room(spaceName);
+						space.setInitial(spaceInitial);
+						roomMap.put(spaceInitial, space);
+					} else {
+						throw new BadConfigFormatException("Invalid setup config format");
+					}
 				}
+				reader.close();
 			}
-			reader.close();
 		} catch (FileNotFoundException e) {
 			throw new BadConfigFormatException("Setup config file not found");
 		}
