@@ -202,9 +202,7 @@ public class Board {
 			reader.close();
 			// Set the dimensions of the board
 			numRows = lines.size();
-			this.numRows = numRows;
 			numColumns = lines.get(0).length;
-			this.numColumns = numColumns;
 			grid = new BoardCell[numRows][numColumns];
 
 			// Loop through the layout lines and populate the grid

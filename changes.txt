@@ -1,0 +1,165 @@
+Old Code:
+
+public void findAdj() {
+	// check to see if there are adjacent cells without going out of bounds
+	for (int i = 0; i < numRows; i++) {
+		for (int j = 0; j < numColumns; j++) {
+			Set<BoardCell> tmp = new HashSet<BoardCell>();
+			if (getCell(i,j).isDoorway()) {
+				if (i+1 < numRows && getCell(i+1,j).isWalkway()) {
+					tmp.add(getCell(i+1,j));
+				}
+				if (i-1 >= 0 && getCell(i-1,j).isWalkway()) {
+					tmp.add(getCell(i-1,j));
+				}
+				if (j+1 < numColumns && getCell(i,j+1).isWalkway()) {
+					tmp.add(getCell(i,j+1));
+				}
+				if (j-1 >= 0 && getCell(i,j-1).isWalkway()) {
+					tmp.add(getCell(i,j-1));
+				}
+				
+				if (getCell(i,j).getDoorDirection().equals(DoorDirection.DOWN)) {
+					if (getCell(i+1, j).getInitial() != 'X' && getCell(i+1, j).getInitial() != 'W'){
+						char init = getCell(i+1,j).getInitial();
+						BoardCell cell = roomMap.get(init).getCenterCell();
+						tmp.add(cell);
+					}
+				}
+				else if (getCell(i,j).getDoorDirection().equals(DoorDirection.UP)) {
+					if (getCell(i-1, j).getInitial() != 'X' && getCell(i-1, j).getInitial() != 'W'){
+						char init = getCell(i-1,j).getInitial();
+						BoardCell cell = roomMap.get(init).getCenterCell();
+						tmp.add(cell);
+					}
+				}
+				else if (getCell(i,j).getDoorDirection().equals(DoorDirection.RIGHT)) {
+					if (getCell(i, j+1).getInitial() != 'X' && getCell(i, j+1).getInitial() != 'W'){
+						char init = getCell(i,j+1).getInitial();
+						BoardCell cell = roomMap.get(init).getCenterCell();
+						tmp.add(cell);
+					}
+				}
+				else if (getCell(i,j).getDoorDirection().equals(DoorDirection.LEFT)) {
+					if (getCell(i, j-1).getInitial() != 'X' && getCell(i, j-1).getInitial() != 'W'){
+						char init = getCell(i,j-1).getInitial();
+						BoardCell cell = roomMap.get(init).getCenterCell();
+						tmp.add(cell);
+					}
+				}
+			}
+			else if (getCell(i, j).isWalkway()) {
+				if (i+1 < numRows && grid[i+1][j].getInitial() != 'X' && grid[i+1][j].isWalkway()) {
+					tmp.add(getCell(i+1, j));
+				}
+				if (i-1 >= 0 && grid[i-1][j].getInitial() != 'X' && grid[i-1][j].isWalkway()) {
+					tmp.add(getCell(i-1, j));
+				}
+				if (j+1 < numColumns && grid[i][j+1].getInitial() != 'X' && grid[i][j+1].isWalkway()) {
+					tmp.add(getCell(i, j+1));
+				}
+				if (j-1 >= 0 && grid[i][j-1].getInitial() != 'X' && grid[i][j-1].isWalkway()) {
+					tmp.add(getCell(i, j-1));
+				}
+			}
+			if (!grid[i][j].isWalkway() && !grid[i][j].isDoorway()) {
+				 // Check for adjacent doorways that lead into this room
+				Room tempRoom = roomMap.get(grid[i][j].getInitial());
+				if (tempRoom.getHasSecretPassage()) {
+					BoardCell passageCell = tempRoom.getSecretPassageCell();
+					tmp.add(passageCell);
+				}
+				
+				ArrayList<BoardCell> temp = tempRoom.getDoorCells();
+				for (int z = 0; z < temp.size(); z++) {
+					BoardCell tempCell = temp.get(z);
+					tmp.add(tempCell);
+				}
+			}
+			
+		adjList.put(getCell(i,j), tmp);
+		}
+	}
+}
+
+
+New Code:
+
+public void findAdj() {
+	// Iterate through all cells to determine adjacency
+	for (int i = 0; i < numRows; i++) {
+		for (int j = 0; j < numColumns; j++) {
+			Set<BoardCell> tmp = new HashSet<>();
+			BoardCell currentCell = getCell(i, j);
+			
+			if (currentCell.isDoorway()) {
+				addDoorwayAdjacencies(i, j, tmp);
+			} else if (currentCell.isWalkway()) {
+				addWalkwayAdjacencies(i, j, tmp);
+			} else {
+				addRoomAdjacencies(i, j, tmp);
+			}
+			
+			adjList.put(currentCell, tmp);
+		}
+	}
+}
+
+private void addDoorwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
+	addAdjacentWalkways(row, col, adjacencies);
+	
+	DoorDirection direction = getCell(row, col).getDoorDirection();
+	int targetRow = row, targetCol = col;
+
+	switch (direction) {
+		case DOWN -> targetRow++;
+		case UP -> targetRow--;
+		case RIGHT -> targetCol++;
+		case LEFT -> targetCol--;
+	}
+	
+	if (isInBounds(targetRow, targetCol) 
+		&& getCell(targetRow, targetCol).getInitial() != 'X'
+		&& getCell(targetRow, targetCol).getInitial() != 'W') {
+		char init = getCell(targetRow, targetCol).getInitial();
+		BoardCell roomCenter = roomMap.get(init).getCenterCell();
+		adjacencies.add(roomCenter);
+	}
+}
+
+private void addWalkwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
+	addAdjacentWalkways(row, col, adjacencies);
+}
+
+private void addAdjacentWalkways(int row, int col, Set<BoardCell> adjacencies) {
+	if (isInBounds(row + 1, col) && getCell(row + 1, col).isWalkway()) {
+		adjacencies.add(getCell(row + 1, col));
+	}
+	if (isInBounds(row - 1, col) && getCell(row - 1, col).isWalkway()) {
+		adjacencies.add(getCell(row - 1, col));
+	}
+	if (isInBounds(row, col + 1) && getCell(row, col + 1).isWalkway()) {
+		adjacencies.add(getCell(row, col + 1));
+	}
+	if (isInBounds(row, col - 1) && getCell(row, col - 1).isWalkway()) {
+		adjacencies.add(getCell(row, col - 1));
+	}
+}
+
+private void addRoomAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
+	BoardCell currentCell = getCell(row, col);
+	Room room = roomMap.get(currentCell.getInitial());
+
+	if (room.getHasSecretPassage()) {
+		adjacencies.add(room.getSecretPassageCell());
+	}
+	
+	for (BoardCell doorCell : room.getDoorCells()) {
+		adjacencies.add(doorCell);
+	}
+}
+
+private boolean isInBounds(int row, int col) {
+	return row >= 0 && row < numRows && col >= 0 && col < numColumns;
+}
+
