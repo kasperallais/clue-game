@@ -21,8 +21,6 @@ public class Board {
 	private String layoutConfigFile;
 	private String setupConfigFile;
 	private Map<Character, Room> roomMap;
-	private int numberRows;
-	private int numberCols;
 	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<BoardCell, Set<BoardCell>>();
 	private HashMap<Character, String> legendMap = new HashMap<Character, String>();
 
@@ -42,17 +40,17 @@ public class Board {
 
 	public void findAdj() {
 		// check to see if there are adjacent cells without going out of bounds
-		for (int i = 0; i < numberRows; i++) {
-			for (int j = 0; j < numberCols; j++) {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
 				Set<BoardCell> tmp = new HashSet<BoardCell>();
 				if (getCell(i,j).isDoorway()) {
-					if (i+1 < numberRows && getCell(i+1,j).isWalkway()) {
+					if (i+1 < numRows && getCell(i+1,j).isWalkway()) {
 						tmp.add(getCell(i+1,j));
 					}
 					if (i-1 >= 0 && getCell(i-1,j).isWalkway()) {
 						tmp.add(getCell(i-1,j));
 					}
-					if (j+1 < numberCols && getCell(i,j+1).isWalkway()) {
+					if (j+1 < numColumns && getCell(i,j+1).isWalkway()) {
 						tmp.add(getCell(i,j+1));
 					}
 					if (j-1 >= 0 && getCell(i,j-1).isWalkway()) {
@@ -89,13 +87,13 @@ public class Board {
 					}
 				}
 				else if (getCell(i, j).isWalkway()) {
-					if (i+1 < numberRows && grid[i+1][j].getInitial() != 'X' && grid[i+1][j].isWalkway()) {
+					if (i+1 < numRows && grid[i+1][j].getInitial() != 'X' && grid[i+1][j].isWalkway()) {
 						tmp.add(getCell(i+1, j));
 					}
 					if (i-1 >= 0 && grid[i-1][j].getInitial() != 'X' && grid[i-1][j].isWalkway()) {
 						tmp.add(getCell(i-1, j));
 					}
-					if (j+1 < numberCols && grid[i][j+1].getInitial() != 'X' && grid[i][j+1].isWalkway()) {
+					if (j+1 < numColumns && grid[i][j+1].getInitial() != 'X' && grid[i][j+1].isWalkway()) {
 						tmp.add(getCell(i, j+1));
 					}
 					if (j-1 >= 0 && grid[i][j-1].getInitial() != 'X' && grid[i][j-1].isWalkway()) {
@@ -142,11 +140,11 @@ public class Board {
 	}
 
 	public int getNumRows() {
-		return numberRows;
+		return numRows;
 	}
 
 	public int getNumColumns() {
-		return numberCols;
+		return numColumns;
 	}
 
     public Set<BoardCell> getAdjList(int row, int col) {
@@ -207,9 +205,9 @@ public class Board {
 			reader.close();
 			// Set the dimensions of the board
 			numRows = lines.size();
-			this.numberRows = numRows;
+			this.numRows = numRows;
 			numColumns = lines.get(0).length;
-			this.numberCols = numColumns;
+			this.numColumns = numColumns;
 			grid = new BoardCell[numRows][numColumns];
 
 			// Loop through the layout lines and populate the grid
@@ -279,8 +277,8 @@ public class Board {
 			throw new BadConfigFormatException("Layout config file not found");
 		}
 		
-		for (int i = 0; i < numberRows; i++) {
-			for (int j = 0; j < numberCols; j++) {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
 				BoardCell doorCell = grid[i][j];
 				if (doorCell.isDoorway()) {
 					if (doorCell.getDoorDirection().equals(DoorDirection.UP)) {
