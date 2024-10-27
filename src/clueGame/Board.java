@@ -21,8 +21,8 @@ public class Board {
 	private String layoutConfigFile;
 	private String setupConfigFile;
 	private Map<Character, Room> roomMap;
-	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<BoardCell, Set<BoardCell>>();
-	private HashMap<Character, String> legendMap = new HashMap<Character, String>();
+	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<>();
+	private HashMap<Character, String> legendMap = new HashMap<>();
 
 	public static Board getInstance() {
 		return theInstance;
