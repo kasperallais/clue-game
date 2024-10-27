@@ -39,8 +39,8 @@ public class Room {
     	return this.hasSecretPassage;
     }
     
-    public void setInitial(char newinit) {
-    	this.initial = newinit;
+    public void setInitial(char newInitial) {
+    	this.initial = newInitial;
     }
     
     public void setCenterCell(BoardCell cell) {
