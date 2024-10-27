@@ -16,15 +16,27 @@ public class Room {
     }
 
     public String getName() {
-        return name; // Placeholder for getting the room name
+        return name;
     }
 
     public BoardCell getCenterCell() {
-        return centerCell; // Placeholder for center cell
+        return centerCell;
     }
 
     public BoardCell getLabelCell() {
-        return labelCell; // Placeholder for label cell
+        return labelCell;
+    }
+    
+    public ArrayList<BoardCell> getDoorCells() {
+    	return this.doorCells;
+    }
+    
+    public BoardCell getSecretPassageCell() {
+    	return this.secretPassageCell;
+    }
+    
+    public boolean getHasSecretPassage() {
+    	return this.hasSecretPassage;
     }
     
     public void setInitial(char newinit) {
@@ -43,23 +55,11 @@ public class Room {
     	this.doorCells.add(cell);
     }
     
-    public ArrayList<BoardCell> getDoorCells() {
-    	return this.doorCells;
-    }
-    
     public void setSecretPassageCell(BoardCell cell) {
     	this.secretPassageCell = cell;
     }
     
-    public BoardCell getSecretPassageCell() {
-    	return this.secretPassageCell;
-    }
-    
-    public void setSecretPassage(boolean isPassage) {
+    public void setHasSecretPassage(boolean isPassage) {
     	this.hasSecretPassage = isPassage;
-    }
-    
-    public boolean getSecretPassage() {
-    	return this.hasSecretPassage;
     }
 }

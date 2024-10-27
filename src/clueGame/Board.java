@@ -113,7 +113,7 @@ public class Board {
 				if (!grid[i][j].isWalkway() && !grid[i][j].isDoorway()) {
 					 // Check for adjacent doorways that lead into this room
 					Room tempRoom = roomMap.get(grid[i][j].getInitial());
-					if (tempRoom.getSecretPassage()) {
+					if (tempRoom.getHasSecretPassage()) {
 						BoardCell passageCell = tempRoom.getSecretPassageCell();
 						tmp.add(passageCell);
 					}
@@ -313,7 +313,7 @@ public class Board {
 					Room theOGRoom = roomMap.get(ogRoom);
 					Room tempRoom = roomMap.get(passageRoom);
 					theOGRoom.setSecretPassageCell(tempRoom.getCenterCell());
-					theOGRoom.setSecretPassage(true);
+					theOGRoom.setHasSecretPassage(true);
 				}
 			}
 		}
@@ -330,7 +330,7 @@ public class Board {
 		
     }
 	public void findAllTargets(BoardCell startCell, int pathLength) {
-		// Find adjacent cells of paramter cell each time
+		// Find adjacent cells of parameter cell each time
 		//findAdj();
 		
 		// get the adjacent cell list
