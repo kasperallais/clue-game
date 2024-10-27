@@ -7,7 +7,6 @@ public class Room {
     private BoardCell centerCell;
     private BoardCell labelCell;
     private ArrayList<BoardCell> doorCells;
-    private BoardCell doorWayCell;
     private BoardCell secretPassageCell;
     private boolean hasSecretPassage;
 
