@@ -21,8 +21,6 @@ public class Board {
 	private String layoutConfigFile;
 	private String setupConfigFile;
 	private Map<Character, Room> roomMap;
-	final static int COLS = 4;
-	final static int ROWS = 4;
 	private int numberRows;
 	private int numberCols;
 	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<BoardCell, Set<BoardCell>>();
@@ -144,11 +142,11 @@ public class Board {
 	}
 
 	public int getNumRows() {
-		return numberRows; // Placeholder value
+		return numberRows;
 	}
 
 	public int getNumColumns() {
-		return numberCols; // Placeholder value
+		return numberCols;
 	}
 
     public Set<BoardCell> getAdjList(int row, int col) {
