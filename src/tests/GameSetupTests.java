@@ -17,6 +17,15 @@ import experiment.TestBoardCell;
 class GameSetupTests {
 	private static Board board;
 	
+	/*
+	 * I changed cluesetup.txt and added in players and weapons
+	 * The config functions loads them in
+	 * I added two new arraylists at the top called players and cardDeck
+	 * players holds all the players (6)
+	 * cardDeck holds all room card, person cards, and weapon cards
+	 * This is all done in loadSetupConfig
+	 * I started deal cards but i mean you can restart it i havent really done much on that
+	 */
 	@BeforeAll
 	public static void setUp() {
 		// Board is singleton, get the only instance

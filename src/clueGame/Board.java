@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,26 @@ public class Board {
 			loadSetupConfig();
 			loadLayoutConfig();
 			findAdj();
+			dealCards();
 		} catch (BadConfigFormatException e) {
 			System.out.println("Unable to initialize the board");
 		}
 	}
-
+	
+	public void dealCards() {
+		Random value = new Random();
+		int x = 0;
+		while (x < 100) {
+			int result = value.nextInt(8);
+			System.out.println(result);
+			x++;
+		}
+		int result = value.nextInt(8);
+		
+		String roomSolution = cardDeck.get(result).getName();
+		System.out.println(roomSolution);
+	}
+	
 	public void findAdj() {
 	    // Iterate through all cells to determine adjacency
 	    for (int i = 0; i < numRows; i++) {
