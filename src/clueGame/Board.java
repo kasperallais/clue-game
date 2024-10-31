@@ -23,6 +23,8 @@ public class Board {
 	private Map<Character, Room> roomMap;
 	private Map<BoardCell, Set<BoardCell>> adjList = new HashMap<>();
 	private HashMap<Character, String> legendMap = new HashMap<>();
+	private ArrayList<Player> players;
+	private ArrayList<Card> cardDeck;
 
 	public static Board getInstance() {
 		return theInstance;
@@ -158,13 +160,14 @@ public class Board {
 			File file = new File(setupConfigFile);
 			try (Scanner reader = new Scanner(file)) {
 				roomMap = new HashMap<>();
+				players = new ArrayList<Player>();
+				cardDeck = new ArrayList<Card>();
 				while (reader.hasNextLine()) {
 					String line = reader.nextLine().trim();
 					if (line.startsWith("//") || line.isEmpty()) {
 						continue;
 					}
 					String[] parts = line.split(",\\s*");
-
 					if (parts.length == 3 && parts[0].equals("Room")) {
 						String roomName = parts[1];
 						char roomInitial = parts[2].charAt(0);
@@ -172,13 +175,34 @@ public class Board {
 						room.setInitial(roomInitial);
 						roomMap.put(roomInitial, room);
 						legendMap.put(roomInitial, roomName);
+						if (!roomMap.containsKey(room)) {
+							Card newCard = new Card(roomName, CardType.ROOM);
+							cardDeck.add(newCard);
+						}
 					} else if (parts.length == 3 && parts[0].equals("Space")) {
 						String spaceName = parts[1];
 						char spaceInitial = parts[2].charAt(0);
 						Room space = new Room(spaceName);
 						space.setInitial(spaceInitial);
-						roomMap.put(spaceInitial, space);
-					} else {
+						roomMap.put(spaceInitial, space);	
+					} else if (parts.length == 5) {
+						int tempRow = Integer.parseInt(parts[3]);
+						int tempCol = Integer.parseInt(parts[4]);
+						if (parts[2].equals("Human")) {
+							HumanPlayer newHuman = new HumanPlayer(parts[0], parts[1], tempRow, tempCol);
+							players.add(newHuman);
+						} else {
+							ComputerPlayer newComp = new ComputerPlayer(parts[0], parts[1], tempRow, tempCol);
+							players.add(newComp);
+						}
+						Card newCard = new Card(parts[0], CardType.PERSON);
+						cardDeck.add(newCard);
+					} else if (parts.length == 1) {
+						Card newCard = new Card(parts[0], CardType.WEAPON);
+						cardDeck.add(newCard);
+					}
+					
+					else {
 						throw new BadConfigFormatException("Invalid setup config format");
 					}
 				}
@@ -344,5 +368,13 @@ public class Board {
 
 			visited.remove(cell);
 		}
+	}
+	
+	public ArrayList<Player> getPlayers(){
+		return players;
+	}
+	
+	public ArrayList<Card> getDeck(){
+		return cardDeck;
 	}
 }

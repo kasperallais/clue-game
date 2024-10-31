@@ -11,3 +11,17 @@ Room, The Observatory Tower, O
 // other spaces on board
 Space, Unused, X
 Space, Walkway, W
+// people: name, color, Human/Computer, row, col
+Big Man, RED, Human, 3, 5
+Toby Mack, GREEN, Computer, 16, 17
+John Cena, PINK, Computer, 20, 20
+Max Verstappen, BLUE, Computer, 15, 3
+Alex Honnold, ORANGE, Computer, 6, 17
+George Washington, GRAY, Computer, 10, 10
+// Weapons
+Revolver
+Knife
+Chair
+Wrench
+Rope
+Candlestick
