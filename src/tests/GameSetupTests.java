@@ -53,5 +53,12 @@ class GameSetupTests {
         assertEquals(CardType.WEAPON, myArray.get(20).getCardType());
         assertEquals("Chair", myArray.get(17).getName());
     }
+	
+    @Test
+    public void testSolutionSetup() {
+        assertNotNull(board.getSolution().getRoom(), "Room card in solution is null");
+        assertNotNull(board.getSolution().getPerson(), "Person card in solution is null");
+        assertNotNull(board.getSolution().getWeapon(), "Weapon card in solution is null");
+    }
 
 }
