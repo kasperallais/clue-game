@@ -26,6 +26,7 @@ public class Board {
 	private HashMap<Character, String> legendMap = new HashMap<>();
 	private ArrayList<Player> players;
 	private ArrayList<Card> cardDeck;
+	private Solution solution;
 
 	public static Board getInstance() {
 		return theInstance;
@@ -40,20 +41,6 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println("Unable to initialize the board");
 		}
-	}
-	
-	public void dealCards() {
-		Random value = new Random();
-		int x = 0;
-		while (x < 100) {
-			int result = value.nextInt(8);
-			System.out.println(result);
-			x++;
-		}
-		int result = value.nextInt(8);
-		
-		String roomSolution = cardDeck.get(result).getName();
-		System.out.println(roomSolution);
 	}
 	
 	public void findAdj() {
@@ -393,4 +380,39 @@ public class Board {
 	public ArrayList<Card> getDeck(){
 		return cardDeck;
 	}
+	
+    public void dealCards() {
+        // Randomly select one room, one person, and one weapon as the solution
+        Card room = getRandomCardOfType(CardType.ROOM);
+        Card person = getRandomCardOfType(CardType.PERSON);
+        Card weapon = getRandomCardOfType(CardType.WEAPON);
+        solution = new Solution(room, person, weapon);
+
+        // Remove solution cards from the deck
+        cardDeck.remove(room);
+        cardDeck.remove(person);
+        cardDeck.remove(weapon);
+
+        // Shuffle and deal the remaining cards to players
+        int playerIndex = 0;
+        for (Card card : cardDeck) {
+            players.get(playerIndex).addCard(card);
+            playerIndex = (playerIndex + 1) % players.size();
+        }
+    }
+
+    private Card getRandomCardOfType(CardType type) {
+        Random rand = new Random();
+    	ArrayList<Card> cardsOfType = new ArrayList<>();
+        for (Card card : cardDeck) {
+            if (card.getCardType() == type) {
+                cardsOfType.add(card);
+            }
+        }
+        return cardsOfType.get(rand.nextInt(cardsOfType.size()));
+    }
+
+    public Solution getSolution() {
+        return solution;
+    }
 }
