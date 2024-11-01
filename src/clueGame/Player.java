@@ -14,6 +14,7 @@ public abstract class Player {
 		this.color = color;
 		this.row = row;
 		this.col = col;
+		this.hand = new ArrayList<>();
 	}
 	
 	public String getName() {
@@ -26,5 +27,13 @@ public abstract class Player {
 	
 	public int getRow() {
 		return this.row;
+	}
+	
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+	
+	public void addCard(Card card) {
+		hand.add(card);
 	}
 }
