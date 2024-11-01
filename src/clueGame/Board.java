@@ -26,6 +26,7 @@ public class Board {
 	private HashMap<Character, String> legendMap = new HashMap<>();
 	private ArrayList<Player> players;
 	private ArrayList<Card> cardDeck;
+	private ArrayList<Card> fullDeck;
 	private Solution solution;
 
 	public static Board getInstance() {
@@ -165,6 +166,7 @@ public class Board {
 				roomMap = new HashMap<>();
 				players = new ArrayList<Player>();
 				cardDeck = new ArrayList<Card>();
+				fullDeck = new ArrayList<Card>();
 				while (reader.hasNextLine()) {
 					String line = reader.nextLine().trim();
 					if (line.startsWith("//") || line.isEmpty()) {
@@ -181,6 +183,7 @@ public class Board {
 						if (!roomMap.containsKey(room)) {
 							Card newCard = new Card(roomName, CardType.ROOM);
 							cardDeck.add(newCard);
+							fullDeck.add(newCard);
 						}
 					} else if (parts.length == 3 && parts[0].equals("Space")) {
 						String spaceName = parts[1];
@@ -200,9 +203,11 @@ public class Board {
 						}
 						Card newCard = new Card(parts[0], CardType.PERSON);
 						cardDeck.add(newCard);
+						fullDeck.add(newCard);
 					} else if (parts.length == 1) {
 						Card newCard = new Card(parts[0], CardType.WEAPON);
 						cardDeck.add(newCard);
+						fullDeck.add(newCard);
 					}
 					
 					else {
@@ -414,5 +419,9 @@ public class Board {
 
     public Solution getSolution() {
         return solution;
+    }
+    
+    public ArrayList<Card> getFullDeck() {
+    	return fullDeck;
     }
 }
