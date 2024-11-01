@@ -407,15 +407,19 @@ public class Board {
     }
 
     private Card getRandomCardOfType(CardType type) {
-        Random rand = new Random();
-    	ArrayList<Card> cardsOfType = new ArrayList<>();
+        ArrayList<Card> cardsOfType = new ArrayList<>();
         for (Card card : cardDeck) {
             if (card.getCardType() == type) {
                 cardsOfType.add(card);
             }
         }
+        if (cardsOfType.isEmpty()) {
+            throw new IllegalArgumentException("No cards of type " + type + " found in cardDeck");
+        }
+        Random rand = new Random();
         return cardsOfType.get(rand.nextInt(cardsOfType.size()));
     }
+
 
     public Solution getSolution() {
         return solution;
