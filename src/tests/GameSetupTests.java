@@ -47,7 +47,7 @@ class GameSetupTests {
 
 	@Test
     public void testCardSetup() {
-		ArrayList<Card> myArray = board.getDeck();
+		ArrayList<Card> myArray = board.getFullDeck();
         assertEquals(21, myArray.size());
         assertEquals(CardType.ROOM, myArray.get(0).getCardType());
         assertEquals(CardType.PERSON, myArray.get(12).getCardType());
