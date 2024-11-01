@@ -1,5 +1,140 @@
-I, Kasper Allais, certify that I participated equitably in the creation of assignment C15A-1, dated 10/16/2024.
-I, Michael Tetreault, certify that I participated equitably in the creation of this assignment C15A-1, dated 10/16/2024.
+commit a5bcb2aace0fbe801b70b0008d71361361dc095f
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:17:25 2024 -0600
+
+    Removed changes.txt from directory
+
+commit afad5401f9662a3cf38e6a701a175d96d8df1a36
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:16:13 2024 -0600
+
+    Wrote two new tests (testSolutionSetup and testCardDealing)
+
+commit f4ff7646c07452fc515409929dd91119a873aca9
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 15:57:29 2024 -0600
+
+    Added test to test Solution setup
+
+commit f5b8efee199210607b05cbacf40e21aa00bf2308
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Thu Oct 31 15:20:23 2024 -0600
+
+    added some more code
+
+commit 8af9f1d5f0d8a54fce90959187c5f5175da28f93
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Thu Oct 31 13:36:58 2024 -0600
+
+    Made and passed some initial tests
+
+commit 4e0bbd0057e5b9e395728c9c05980c6045365427
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:58:34 2024 -0600
+
+    Removed lines that had no effect (Board.java)
+
+commit b2c765f67fe875e5ab5f6a427d6a3f068a9f5e93
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:30:23 2024 -0600
+
+    Refactored findAdj to add helper functions for clarity (Board.java)
+
+commit 030f121116b55c700109751a6d5d849f9aa9ebd5
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:16:08 2024 -0600
+
+    Changed adjList and legendMap to an empty HashMap (Board.java)
+
+commit 23fa2fd91d8c5f1f931adc40fca5ba82968f03e8
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:14:33 2024 -0600
+
+    Removed duplicated variables that had the same purpose (Board.java)
+
+commit 95035d89f720582416200aa85bb9ccb689ca81d2
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:06:38 2024 -0600
+
+    Got rid of constants that were never used (Board.java)
+
+commit b800febd2f300aed037ec3b7f16b99481bee123d
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 16:02:55 2024 -0600
+
+    Added try for reader in loadSetupConfig() to close reader (Board.java)
+
+commit 4b01d6d74092dc87b3de2c7d6cd4340cfc839d7a
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 15:52:48 2024 -0600
+
+    Removed singleton constructor for Board as it was never used (Board.java)
+
+commit 9116c6929eaac429c53a37d087801e177d6805c7
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 15:48:41 2024 -0600
+
+    Changed variable names in class for clarity (Room.java)
+
+commit 744ab31244574d4f89d5a68765881857d166f8ea
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 15:31:36 2024 -0600
+
+    Moved around getters and setters, got rid of old comments and adjusted function calls in Board class (Room.java)
+
+commit cbf462e87fc043a5c2584378f8a5e17d5cf24a95
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 15:23:51 2024 -0600
+
+    Removed unused variable in Room class (Room.java)
+
+commit 9182b6c4daf976fee3da58e97062668d8e205db5
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Oct 27 15:22:09 2024 -0600
+
+    Remove unused libraries (Board.java)
+
+commit 3a264094e581bda0d21cb1629741dc5a6fac09aa
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Oct 24 11:22:22 2024 -0600
+
+    readded junit
+
+commit 88fe9e376a7ec07d15eb4ed99fc92778f8f1e3c0
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Oct 20 18:48:26 2024 -0600
+
+    Passed all tests
+
+commit 69bc8610e36358acabf335aa5551b32a2de44032
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Oct 20 18:04:18 2024 -0600
+
+    Added some functions to room and Board then passed more tests
+
+commit 863b826f18a26951ac444df41a5c4763bc6af4ce
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Oct 20 17:16:48 2024 -0600
+
+    Passed some tests from our personal tests
+
+commit 4bf9b98b164b8000faa378d10802027ea3afcaf0
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Oct 20 16:57:36 2024 -0600
+
+    Passed all tests from one test file
+
+commit a0f57a2915bfa4428ff650d5f1bd6d8ff5f1bb27
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Oct 20 16:53:45 2024 -0600
+
+    Passed all adjacency tests
+
+commit 2c2bdcedd31e1bd2b396e1a2ac1289dbeaf3efca
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Wed Oct 16 19:21:07 2024 -0600
+
+    Created new test files and added new test template file
 
 commit c3c7bff92bdc1e812c6b6e66a9ba165b446dc98d
 Author: “Michael <“michael_tetreault@mines.edu”>
