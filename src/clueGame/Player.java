@@ -33,7 +33,7 @@ public abstract class Player {
 		return hand;
 	}
 	
-	public void addCard(Card card) {
+	public void updateHand(Card card) {
 		hand.add(card);
 	}
 }

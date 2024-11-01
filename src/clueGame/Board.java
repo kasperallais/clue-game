@@ -401,7 +401,7 @@ public class Board {
         // Shuffle and deal the remaining cards to players
         int playerIndex = 0;
         for (Card card : cardDeck) {
-            players.get(playerIndex).addCard(card);
+            players.get(playerIndex).updateHand(card);
             playerIndex = (playerIndex + 1) % players.size();
         }
     }
