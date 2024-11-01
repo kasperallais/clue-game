@@ -1,3 +1,51 @@
+commit 65e7d4d5e800870d435ed0e6a7b4c8bc69967276
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:46:19 2024 -0600
+
+    Changed ClueSetup306 to include weapons for old tests to pass
+
+commit 770201af7821279b3bdf0f32eb382542b5564367
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:45:47 2024 -0600
+
+    Changed getRandomCardOfType() to avoid an error in previous tests
+
+commit 60fd360d49a198b071ed43c5bbb99edb4ce51c07
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:37:39 2024 -0600
+
+    Refactored some variables to match assigment requirements
+
+commit 2c381bf1afca14394aa26367526e58a9dccd1930
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:33:08 2024 -0600
+
+    Changed testCardSetup test to include fullDeck (All tests pass)
+
+commit d8295f2ec4e1966836b0d786eff729b44eba7d52
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:32:30 2024 -0600
+
+    Added fullDeck instance for tests
+
+commit 2012e696b5ca6434e23557847cc3440485b71d54
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:19:20 2024 -0600
+
+    Added getHand() and addCard() methods to Player
+
+commit eaffb17e3aa0601bc80dc06c1d7abf9daa752b15
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:18:53 2024 -0600
+
+    Added dealCards() and get getRandomCardOfType() to Board
+
+commit a6537c0d0900b4e56307cec2a32cf5fac4f0b6ae
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:17:51 2024 -0600
+
+    Updated gitlog
+
 commit a5bcb2aace0fbe801b70b0008d71361361dc095f
 Author: kasperallais <kasper.allais@gmail.com>
 Date:   Fri Nov 1 16:17:25 2024 -0600
