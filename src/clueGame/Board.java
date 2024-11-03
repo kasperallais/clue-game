@@ -428,4 +428,41 @@ public class Board {
     public ArrayList<Card> getFullDeck() {
     	return fullDeck;
     }
+    
+    public boolean checkAccusation(Card room, Card person, Card weapon) {
+    	if (room.getName().equals(solution.getRoom().getName())){
+    		if (person.getName().equals(solution.getPerson().getName())) {
+    			if (weapon.getName().equals(solution.getWeapon().getName())) {
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    public Card handleSuggestion(Player suggester, Card suggRoom, Card suggPerson, Card SuggWeapon) {
+    	for (Player currentPlayer: players) {
+    		Card returned = currentPlayer.disproveSuggestion(suggRoom, suggPerson, SuggWeapon);
+    		if (returned == null) {
+    			continue;
+    		}
+    		if (!returned.getName().equals(null)) {
+    			if (currentPlayer.getName().equals(suggester.getName())) {
+    				continue;
+    			} else {
+    				return returned;
+    			}
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public void addTestingPlayers() {
+    	players.clear();
+    }
+    
+    public void addPlayerTest(Player addedPlayer) {
+    	players.add(addedPlayer);
+    }
 }
