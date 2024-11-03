@@ -402,6 +402,7 @@ public class Board {
         int playerIndex = 0;
         for (Card card : cardDeck) {
             players.get(playerIndex).updateHand(card);
+            players.get(playerIndex).addSeenCard(card);
             playerIndex = (playerIndex + 1) % players.size();
         }
     }

@@ -19,6 +19,7 @@ public abstract class Player {
 		this.row = row;
 		this.col = col;
 		this.hand = new ArrayList<>();
+		this.seenCards = new HashSet<Card>();
 	}
 
 	public String getName() {
@@ -40,32 +41,36 @@ public abstract class Player {
 	public void updateHand(Card card) {
 		hand.add(card);
 	}
+	
+	public void addSeenCard(Card card) {
+		seenCards.add(card);
+	}
 
 	public Card disproveSuggestion(Card suggestionRoom, Card suggestionPerson, Card suggestionWeapon) {
 		Random random = new Random();
 		int rn = random.nextInt(2 - 0 + 0) + 0;
-
-		seenCards = new HashSet<Card>();
+		
+		Set<Card> extraCards = new HashSet<Card>();
 		for (int i = 0; i < hand.size(); i++) {
 			if (hand.get(i).getName().equals(suggestionRoom.getName())) {
-				seenCards.add(hand.get(i));
+				extraCards.add(hand.get(i));
 			}
 			else if (hand.get(i).getName().equals(suggestionPerson.getName())) {
-				seenCards.add(hand.get(i));
+				extraCards.add(hand.get(i));
 			}
 			else if (hand.get(i).getName().equals(suggestionWeapon.getName())) {
-				seenCards.add(hand.get(i));
+				extraCards.add(hand.get(i));
 			}
 		}
 
-		if (seenCards.size() == 1){
-			for (Card card: seenCards) {
+		if (extraCards.size() == 1){
+			for (Card card: extraCards) {
 				return card;
 			}
-		} else if (seenCards.size() > 1){
+		} else if (extraCards.size() > 1){
 			
 			int counter = 0;
-			for (Card card: seenCards) {
+			for (Card card: extraCards) {
 				if (counter == rn) {
 					return card;
 				}
@@ -73,7 +78,7 @@ public abstract class Player {
 			}
 		}
 		
-		seenCards.clear();
+		extraCards.clear();
 		return null;
 
 	}
