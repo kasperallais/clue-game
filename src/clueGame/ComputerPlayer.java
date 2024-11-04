@@ -16,21 +16,25 @@ public class ComputerPlayer extends Player{
 	    List<Card> unseenPeople = new ArrayList<>();
 	    List<Card> unseenWeapons = new ArrayList<>();
 
+	    // Filter unseen cards for people and weapons
 	    for (Card card : Board.getInstance().getFullDeck()) {
-	        if (!getSeenCards().contains(card) && card.getCardType() == CardType.PERSON) {
-	            unseenPeople.add(card);
-	        } else if (!getSeenCards().contains(card) && card.getCardType() == CardType.WEAPON) {
-	            unseenWeapons.add(card);
+	        if (!getSeenCards().contains(card)) { // Ensure card is unseen
+	            if (card.getCardType() == CardType.PERSON) {
+	                unseenPeople.add(card);
+	            } else if (card.getCardType() == CardType.WEAPON) {
+	                unseenWeapons.add(card);
+	            }
 	        }
 	    }
 
 	    Random random = new Random();
+
+	    // Select random unseen person and weapon
 	    Card personCard = unseenPeople.get(random.nextInt(unseenPeople.size()));
 	    Card weaponCard = unseenWeapons.get(random.nextInt(unseenWeapons.size()));
 
 	    return new Solution(roomCard, weaponCard, personCard);
 	}
-
 	
 	public BoardCell selectTargets(Set<BoardCell> targets) {
 	    List<BoardCell> unseenRooms = new ArrayList<>();
@@ -51,4 +55,5 @@ public class ComputerPlayer extends Player{
 	        return otherTargets.get(random.nextInt(otherTargets.size()));
 	    }
 	}
+
 }
