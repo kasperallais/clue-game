@@ -9,13 +9,30 @@ public class Card {
 		this.cardType = type;
 	}
 	
-	public boolean equals(Card otherCard){
-		if (otherCard.equals(this)){
-			return true;
-		} else {
-			return false;
-		}
+	@Override
+	public boolean equals(Object obj) {
+	    // Check if the object is the same instance
+	    if (this == obj) {
+	        return true;
+	    }
+
+	    // Check if the object is an instance of Card
+	    if (obj instanceof Card) {
+	        Card otherCard = (Card) obj;
+
+	        // Compare both the card name and type
+	        return this.cardName.equals(otherCard.cardName) && this.cardType == otherCard.cardType;
+	    }
+
+	    return false;
 	}
+
+	@Override
+	public int hashCode() {
+	    // Generate a hash code based on the card name and type
+	    return cardName.hashCode() + cardType.hashCode();
+	}
+
 	
 	public CardType getCardType() {
 		return cardType;
