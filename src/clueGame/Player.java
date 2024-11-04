@@ -37,6 +37,10 @@ public abstract class Player {
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
+	
+	public Set<Card> getSeenCards() {
+	    return seenCards;
+	}
 
 	public void updateHand(Card card) {
 		hand.add(card);
