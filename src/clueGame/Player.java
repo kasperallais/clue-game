@@ -25,6 +25,10 @@ public abstract class Player {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getColor() {
+		return this.color;
+	}
 
 	public int getCol() {
 		return this.col;

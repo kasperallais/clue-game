@@ -1,3 +1,61 @@
+
+I, Kasper Allais, certify that I participated equitably in the creation of assignment C21A, dated 11/3/2024.
+I, Michael Tetreault, certify that I participated equitably in the creation of this assignment C21A, dated 11/3/2024.
+
+commit 2d007f2f32d670b747d54f79cc644c2bdd3bca3f
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Nov 3 23:42:55 2024 -0700
+
+    Fixed some errors
+
+commit ecd2facf1d6a1b34b623cf4699aa9eb4aa109121
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Nov 3 19:16:14 2024 -0700
+
+    Changed tests
+
+commit 1fd0f41165b1770936cfea46e6b2e8025b70354b
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Nov 3 19:15:51 2024 -0700
+
+    Changed new methods to make tests pass
+
+commit cd5617a27e9e1d2d44a459b8276e07925eeb6af9
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Nov 3 19:14:57 2024 -0700
+
+    Changed equals method to avoid stack overflow
+
+commit 2e7daef71c99ea6d1f1d3b3780a0f60d5dfb3b84
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Nov 3 19:14:11 2024 -0700
+
+    Create new getter for seenCards
+
+commit b9481be2e8075b392a0bad98f39d2f27f88ca9ac
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Sun Nov 3 18:56:07 2024 -0700
+
+    Created two new methods createSuggestion() and selectTarget()
+
+commit 2937f24075345c3a7b47f8e873ce0b87f7909c1d
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Nov 3 12:30:12 2024 -0700
+
+    Fixed logic error with seen cards
+
+commit 5f24f0b0a0d4f383f9b44e1678bd4834beb7a414
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sun Nov 3 12:22:21 2024 -0700
+
+    Added suggestion tests and made them pass
+
+commit 5ad34f0ebbff9a0ad93c77123a17ca0d35e6e3bc
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Fri Nov 1 16:46:49 2024 -0600
+
+    Updated gitlog.txt
+
 commit 65e7d4d5e800870d435ed0e6a7b4c8bc69967276
 Author: kasperallais <kasper.allais@gmail.com>
 Date:   Fri Nov 1 16:46:19 2024 -0600
