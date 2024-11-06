@@ -77,7 +77,7 @@ public class GameCardPanel extends JPanel{
 				case "orange":
 					newPeopleHand.setBackground(Color.orange);
 					break;
-				case "red":
+				case "white":
 					newPeopleHand.setBackground(Color.white);
 					break;
 				case "green": 
@@ -102,7 +102,7 @@ public class GameCardPanel extends JPanel{
 				case "orange":
 					newPeopleSeen.setBackground(Color.orange);
 					break;
-				case "red":
+				case "white":
 					newPeopleSeen.setBackground(Color.white);
 					break;
 				case "green": 
@@ -205,9 +205,11 @@ public class GameCardPanel extends JPanel{
 		frame.setVisible(true); // make it visible
 		
 		// test filling in the data
-		panel.addPeopleCard(new ComputerPlayer( "Col. Mustard", "orange", 0, 0));
-		panel.addPeopleCard(new ComputerPlayer( "Ms Peacok", "orange", 0, 0));
-		panel.addPeopleSeen(new ComputerPlayer( "Bruh Moment", "orange", 0, 0));
+		panel.addPeopleCard(new ComputerPlayer( "Col. Mustard", "white", 0, 0));
+		panel.addPeopleSeen(new ComputerPlayer( "Mrs White", "orange", 0, 0));
+		panel.addPeopleSeen(new ComputerPlayer( "Ms Scarlett", "white", 0, 0));
+		panel.addPeopleSeen(new ComputerPlayer( "Mrs Peacock", "green", 0, 0));
+		panel.addPeopleSeen(new ComputerPlayer( "Reverend Green", "blue", 0, 0));
 		//panel.addSeenPerson();
 //		panel.addRoomCard();
 //		panel.addSeenRoom();
