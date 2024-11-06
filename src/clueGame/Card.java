@@ -2,10 +2,17 @@ package clueGame;
 
 public class Card {
 	String cardName;
+	String color;
 	CardType cardType;
 	
 	public Card(String name, CardType type) {
 		this.cardName = name;
+		this.cardType = type;
+	}
+	
+	public Card(String name, String color, CardType type) {
+		this.cardName = name;
+		this.color = color;
 		this.cardType = type;
 	}
 	
@@ -31,6 +38,14 @@ public class Card {
 	public int hashCode() {
 	    // Generate a hash code based on the card name and type
 	    return cardName.hashCode() + cardType.hashCode();
+	}
+	
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	public String getColor() {
+		return this.color;
 	}
 
 	
