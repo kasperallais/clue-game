@@ -34,7 +34,7 @@ public class GameControlPanel extends JPanel {
 		// make top half
 		JPanel upperPanel = new JPanel();
 		upperPanel.setLayout(new GridLayout(1,2));  
-		JPanel turnPanel = createTurn();
+		turnPanel = createTurn();
 		upperPanel.add(turnPanel);
 		add(upperPanel);
 		JPanel dicePanel = createDiceRoll();

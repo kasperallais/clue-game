@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -21,8 +22,8 @@ public class GameCardPanel extends JPanel{
 	private JTextField peopleSeen;
 	private JLabel peopleInHand;
 	private JLabel peopleInSeen;
-	private ArrayList<String> handPeople;
-	private ArrayList<String> seenPeople;
+	private ArrayList<Player> handPeople;
+	private ArrayList<Player> seenPeople;
 	
 	private JLabel roomInHand;
 	private JLabel roomInSeen;
@@ -37,7 +38,8 @@ public class GameCardPanel extends JPanel{
 	JPanel overAll;
 	
 	public GameCardPanel() {
-		handPeople = new ArrayList<String>();
+		handPeople = new ArrayList<Player>();
+		seenPeople = new ArrayList<Player>();
 		overAll = new JPanel();
 		setLayout(new GridLayout(1,1));
 		TitledBorder border = BorderFactory.createTitledBorder("Known Cards");
@@ -62,23 +64,62 @@ public class GameCardPanel extends JPanel{
 		peopleInHand = new JLabel("In Hand:");
 		peopleInSeen = new JLabel("Seen");
 		panel.add(peopleInHand);
+		
+	
 
 		if (handPeople.size() == 0) {
 			peopleHand = new JTextField("None");
 			panel.add(peopleHand);
 		} else {
-			for (String s: handPeople) {
-				JTextField newPeopleHand = new JTextField(s);
+			for (Player p: handPeople) {
+				JTextField newPeopleHand = new JTextField(p.getName());
+				switch(p.getColor()) {
+				case "orange":
+					newPeopleHand.setBackground(Color.orange);
+					break;
+				case "red":
+					newPeopleHand.setBackground(Color.white);
+					break;
+				case "green": 
+					newPeopleHand.setBackground(Color.green);
+					break;
+				case "blue":
+					newPeopleHand.setBackground(Color.blue);
+					break;
+				}
+				
 				panel.add(newPeopleHand);
 			}
 		}
 		
-		peopleSeen = new JTextField("None");
+		panel.add(peopleInSeen);
+		if (seenPeople.size() == 0) {
+			peopleSeen = new JTextField("None");
+		} else {
+			for (Player p: seenPeople) {
+				JTextField newPeopleSeen = new JTextField(p.getName());
+				switch(p.getColor()) {
+				case "orange":
+					newPeopleSeen.setBackground(Color.orange);
+					break;
+				case "red":
+					newPeopleSeen.setBackground(Color.white);
+					break;
+				case "green": 
+					newPeopleSeen.setBackground(Color.green);
+					break;
+				case "blue":
+					newPeopleSeen.setBackground(Color.blue);
+					break;
+				}
+				panel.add(newPeopleSeen);
+			}
+		}
+		
 		peopleHand.setBorder(new EtchedBorder());
 		peopleSeen.setBorder(new EtchedBorder());
 		
-		panel.add(peopleInSeen);
-		panel.add(peopleSeen);
+		
 		overall.add(panel);
 		overall.setBorder(border);
 		
@@ -130,20 +171,26 @@ public class GameCardPanel extends JPanel{
 	}
 	
 	public void addPeopleCard(Player player) {
-		handPeople.add(player.getName());
+		handPeople.add(player);
+		updatePanels();
+	}
+	
+	public void addPeopleSeen(Player player) {
+		seenPeople.add(player);
 		updatePanels();
 	}
 	
 	public void updatePanels() {		
-		overAll.removeAll();
+		SwingUtilities.invokeLater(() -> {
+            overAll.removeAll();
 
-		overAll.add(createPeoplePanel());
-		overAll.add(createRoomPanel());
-		overAll.add(createWeaponPanel());
+            overAll.add(createPeoplePanel());
+            overAll.add(createRoomPanel());
+            overAll.add(createWeaponPanel());
 
-		overAll.updateUI();
-		//overAll.revalidate();
-		overAll.repaint();
+            overAll.revalidate();
+            overAll.repaint();
+        });
 	}
 	
 	
@@ -159,6 +206,8 @@ public class GameCardPanel extends JPanel{
 		
 		// test filling in the data
 		panel.addPeopleCard(new ComputerPlayer( "Col. Mustard", "orange", 0, 0));
+		panel.addPeopleCard(new ComputerPlayer( "Ms Peacok", "orange", 0, 0));
+		panel.addPeopleSeen(new ComputerPlayer( "Bruh Moment", "orange", 0, 0));
 		//panel.addSeenPerson();
 //		panel.addRoomCard();
 //		panel.addSeenRoom();
