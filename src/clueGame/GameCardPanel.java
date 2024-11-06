@@ -1,13 +1,10 @@
 package clueGame;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -185,7 +182,7 @@ public class GameCardPanel extends JPanel{
 		return overall;
 	}
 	
-	public void addPeopleCard(Card card) {
+	public void addPeopleHand(Card card) {
 		handPeople.add(card);
 		updatePanels();
 	}
@@ -195,7 +192,7 @@ public class GameCardPanel extends JPanel{
 		updatePanels();
 	}
 	
-	public void addRoomCard(Card card) {
+	public void addRoomHand(Card card) {
 		handRoom.add(card);
 		updatePanels();
 	}
@@ -205,7 +202,7 @@ public class GameCardPanel extends JPanel{
 		updatePanels();
 	}
 	
-	public void addWeaponCard(Card card) {
+	public void addWeaponHand(Card card) {
 		handWeapon.add(card);
 		updatePanels();
 	}
@@ -256,12 +253,28 @@ public class GameCardPanel extends JPanel{
 		frame.setVisible(true); // make it visible
 		
 		// test filling in the data
-		panel.addPeopleCard(new Card( "Col. Mustard", "white", CardType.PERSON));
+		panel.addPeopleHand(new Card( "Col. Mustard", "white", CardType.PERSON));
+		
 		panel.addPeopleSeen(new Card( "Mrs White", "orange", CardType.PERSON));
 		panel.addPeopleSeen(new Card( "Ms Scarlett", "white", CardType.PERSON));
 		panel.addPeopleSeen(new Card( "Mrs Peacock", "green", CardType.PERSON));
 		panel.addPeopleSeen(new Card( "Reverend Green", "blue", CardType.PERSON));
-		panel.addRoomSeen(new Card( "Reverend Green", "blue", CardType.PERSON))
+		
+		panel.addRoomSeen(new Card( "Hall", "orange", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Ballroom", "white", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Kitchen", "white", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Billiard Room", "green", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Conservatory", "green", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Lounge", "blue", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Library", "blue", CardType.ROOM));
+		panel.addRoomSeen(new Card( "Dining Room", "pink", CardType.ROOM));
+		
+		panel.addWeaponHand(new Card( "Wrench", "white", CardType.WEAPON));
+		panel.addWeaponHand(new Card( "Rope", "white", CardType.WEAPON));
+		
+		panel.addWeaponSeen(new Card( "Lead Pipe", "orange", CardType.WEAPON));
+		panel.addWeaponSeen(new Card( "Dagger", "pink", CardType.WEAPON));
+		panel.addWeaponSeen(new Card( "Revolver", "pink", CardType.WEAPON));
 		
 	}
 }
