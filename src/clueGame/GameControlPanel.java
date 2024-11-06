@@ -31,6 +31,7 @@ public class GameControlPanel extends JPanel {
 	public GameControlPanel(){
 		setLayout(new GridLayout(2,1));
 		
+		// make top half
 		JPanel upperPanel = new JPanel();
 		upperPanel.setLayout(new GridLayout(1,2));  
 		JPanel turnPanel = createTurn();
@@ -46,6 +47,7 @@ public class GameControlPanel extends JPanel {
 		upperPanel.add(nextPanel);
 		add(upperPanel);
 		
+		// make bottom half
 		JPanel lowerPanel = new JPanel();
 		lowerPanel.setLayout(new GridLayout(1,2));
 		JPanel guessPanel = createGuess();
@@ -62,10 +64,6 @@ public class GameControlPanel extends JPanel {
 		nameLabel = new JTextField("");
 		nameLabel.setBorder(new EtchedBorder());
 		turnLabel = new JTextField("Whose Turn?");
-		if (bgColor.getText().equals("orange")) {
-			System.out.println("Check gets in");
-			nameLabel.setBackground(Color.orange);
-		}
 		panel.add(turnLabel);
 		panel.add(nameLabel);
 		return panel;
