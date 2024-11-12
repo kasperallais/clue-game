@@ -4,30 +4,54 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.lang.reflect.Field;
 
 public abstract class Player {
-	private String name;
-	private String color;
-	private int row;
-	private int col;
-	private ArrayList<Card> hand;
-	private Set<Card> seenCards;
+    private String name;
+    private Color color;
+    private int row;
+    private int col;
+    private ArrayList<Card> hand;
+    private Set<Card> seenCards;
 
-	Player(String name, String color, int row, int col){
-		this.name = name;
-		this.color = color;
-		this.row = row;
-		this.col = col;
-		this.hand = new ArrayList<>();
-		this.seenCards = new HashSet<Card>();
-	}
+    Player(String name, String colorStr, int row, int col){
+        this.name = name;
+        this.color = convertColor(colorStr);
+        this.row = row;
+        this.col = col;
+        this.hand = new ArrayList<>();
+        this.seenCards = new HashSet<Card>();
+    }
+
+    private Color convertColor(String strColor) {
+        Color color;
+        try {
+            Field field = Class.forName("java.awt.Color").getField(strColor.toLowerCase());
+            color = (Color)field.get(null);
+        } catch (Exception e) {
+            color = Color.WHITE; // Default color if not found
+        }
+        return color;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public void draw(Graphics g, int cellWidth, int cellHeight) {
+        int x = this.col * cellWidth;
+        int y = this.row * cellHeight;
+        g.setColor(this.color);
+        int playerSize = Math.min(cellWidth, cellHeight) / 2;
+        g.fillOval(x + cellWidth / 2 - playerSize / 2, y + cellHeight / 2 - playerSize / 2, playerSize, playerSize);
+        g.setColor(Color.BLACK);
+        g.drawOval(x + cellWidth / 2 - playerSize / 2, y + cellHeight / 2 - playerSize / 2, playerSize, playerSize);
+    }
 
 	public String getName() {
 		return this.name;
-	}
-	
-	public String getColor() {
-		return this.color;
 	}
 
 	public int getCol() {
