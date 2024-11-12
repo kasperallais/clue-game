@@ -1,5 +1,62 @@
-I, Kasper Allais, certify that I participated equitably in the creation of assignment C22A-1, dated 11/5/2024.
-I, Michael Tetreault, certify that I participated equitably in the creation of this assignment C22A-1, dated 11/5/2024.
+commit 33f18d47df3a625c31544c162ba92f1f29213ab4
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:11:26 2024 -0700
+
+    Created ClueGame class for Board Panel
+
+commit e3819af0098e26688afc87b44252b22ba90e67a8
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:10:53 2024 -0700
+
+    Changed existing code for new ClueGame class
+
+commit 69e834653080c426e8723b599938012d02578980
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:09:48 2024 -0700
+
+    Changed Player color to a Color instead of a string
+
+commit 59604f146bf3fd88603ee731d1bcd7c93ed9e6a0
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:09:14 2024 -0700
+
+    Added draw() method (BoardCell.java)
+
+commit b9a5c31dede9ec139c3d83d1b169a5ae3bd97f6d
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:08:02 2024 -0700
+
+    Added paintComponent(), drawRoomNames() and drawPlayers() methods (Board.java)
+
+commit 7a145ece9e23b763e8aafd0a7bf60b0893febda4
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Nov 6 12:06:16 2024 -0700
+
+    Finished the code
+
+commit bf6292c8e14bcf1e29a0baec15b138a7d2be43a5
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Nov 6 12:00:12 2024 -0700
+
+    Added extra constructor for card.java and implemented room panel and weapon panel
+
+commit b9ee6c47aabd09cbf402b39c2c170495f58165d7
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Nov 6 11:06:23 2024 -0700
+
+    Got colors to work and finished people panel
+
+commit a1ba22be853ffdb21a3ec23e09fa550f57cc2302
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Nov 6 11:03:16 2024 -0700
+
+    We got it to update when adding stuff to hand or seen for people cards
+
+commit b066d964aac4968f510a8c03c80124f46414f5a4
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Wed Nov 6 10:47:33 2024 -0700
+
+    Made the basic layout
 
 commit 60cbfccc7851ebb539f17e5ee8a617f6cc0e899a
 Author: “Michael <“michael_tetreault@mines.edu”>
