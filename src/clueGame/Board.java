@@ -10,8 +10,12 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Font;
 
-public class Board {
+public class Board extends JPanel{
 
 	private static Board theInstance = new Board();
 	private BoardCell[][] grid;
@@ -29,6 +33,49 @@ public class Board {
 	private ArrayList<Card> fullDeck;
 	private Solution solution;
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Compute cell size
+        int cellWidth = getWidth() / numColumns;
+        int cellHeight = getHeight() / numRows;
+
+        // Loop through all cells and draw them
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numColumns; col++) {
+                BoardCell cell = grid[row][col];
+                cell.draw(g, cellWidth, cellHeight);
+            }
+        }
+
+        // Draw room names after all cells are drawn
+        drawRoomNames(g, cellWidth, cellHeight);
+
+        // Draw players
+        drawPlayers(g, cellWidth, cellHeight);
+    }
+
+    private void drawRoomNames(Graphics g, int cellWidth, int cellHeight) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("SansSerif", Font.BOLD, 12));
+
+        for (Room room : roomMap.values()) {
+            BoardCell labelCell = room.getLabelCell();
+            if (labelCell != null) {
+                int x = labelCell.getCol() * cellWidth;
+                int y = labelCell.getRow() * cellHeight;
+                g.drawString(room.getName(), x, y);
+            }
+        }
+    }
+
+    private void drawPlayers(Graphics g, int cellWidth, int cellHeight) {
+        for (Player player : players) {
+            player.draw(g, cellWidth, cellHeight);
+        }
+    }
+	
 	public static Board getInstance() {
 		return theInstance;
 	}
