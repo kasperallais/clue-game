@@ -144,16 +144,9 @@ public class GameControlPanel extends JPanel {
 		this.responseText.setText(s);
 	}
 	
-	public void setTurn(Player player, int roll) {
-		this.nameLabel.setText(player.getName());
-		this.bgColor.setText(player.getColor());
-		this.diceRoll.setText((Integer.toString(roll)));
-		
-		if (bgColor.getText().equals("orange")) {
-            nameLabel.setBackground(Color.ORANGE);
-        } else {
-            nameLabel.setBackground(Color.WHITE);
-        }
-		
-	}
+    public void setTurn(Player player, int roll) {
+        this.nameLabel.setText(player.getName());
+        this.nameLabel.setBackground(player.getColor());
+        this.diceRoll.setText((Integer.toString(roll)));
+    }
 }
