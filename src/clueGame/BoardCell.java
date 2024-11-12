@@ -2,6 +2,8 @@ package clueGame;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class BoardCell {
 	private String roomName;
@@ -24,6 +26,43 @@ public class BoardCell {
         this.adjList = new HashSet<>();
     }
 
+    public void draw(Graphics g, int cellWidth, int cellHeight) {
+        int x = col * cellWidth;
+        int y = row * cellHeight;
+
+        if (isWalkway()) {
+            g.setColor(Color.YELLOW);
+            g.fillRect(x, y, cellWidth, cellHeight);
+            g.setColor(Color.BLACK);
+            g.drawRect(x, y, cellWidth, cellHeight);
+        } else if (isRoom()) {
+            g.setColor(Color.GRAY);
+            g.fillRect(x, y, cellWidth, cellHeight);
+        }
+
+        if (isDoorway()) {
+            g.setColor(Color.BLUE);
+            int doorWidth = cellWidth / 4;
+            int doorHeight = cellHeight / 4;
+            switch (doorDirection) {
+                case UP:
+                    g.fillRect(x, y, cellWidth, doorHeight);
+                    break;
+                case DOWN:
+                    g.fillRect(x, y + cellHeight - doorHeight, cellWidth, doorHeight);
+                    break;
+                case LEFT:
+                    g.fillRect(x, y, doorWidth, cellHeight);
+                    break;
+                case RIGHT:
+                    g.fillRect(x + cellWidth - doorWidth, y, doorWidth, cellHeight);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
     public DoorDirection getDoorDirection() {
         return this.doorDirection; // Placeholder for door direction
     }
