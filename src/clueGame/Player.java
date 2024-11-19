@@ -43,9 +43,9 @@ public abstract class Player {
         int y = this.row * cellHeight;
         g.setColor(this.color);
         int playerSize = Math.min(cellWidth, cellHeight) / 2;
-        g.fillOval(x + cellWidth / 2 - playerSize / 2, y + cellHeight / 2 - playerSize / 2, playerSize, playerSize);
+        g.fillOval(x + cellWidth / 2 - playerSize, y + cellHeight / 2 - playerSize, playerSize*2, playerSize*2);
         g.setColor(Color.BLACK);
-        g.drawOval(x + cellWidth / 2 - playerSize / 2, y + cellHeight / 2 - playerSize / 2, playerSize, playerSize);
+        g.drawOval(x + cellWidth / 2 - playerSize, y + cellHeight / 2 - playerSize, playerSize*2, playerSize*2);
     }
 	
 	// method to check to see if a player has the cards in the suggestion and disprove it if so
