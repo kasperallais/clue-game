@@ -194,6 +194,7 @@ public class GameCardPanel extends JPanel{
 		updatePanels();
 	}
 	
+	// helper function to make code shorter
 	public void loopThrough(ArrayList<Card> cardArray, JPanel panel) {
 		for (Card c: cardArray) {
 			JTextField newAddition = new JTextField(c.getName());

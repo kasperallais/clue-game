@@ -1,3 +1,87 @@
+commit 6dac5e604cef74cfdd4054a7d9fdd49b6c5a5b78
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 10:48:02 2024 -0700
+
+    Made the card panel a set size to be more readable and made text fields not editable
+
+commit ed30265cc002c6662ff481486c25b17f5f08b0ea
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 10:35:37 2024 -0700
+
+    Added a helper function to make the gameCardPanel code more readable and less repetition
+
+commit c98a1401618bed470ef5f18bcd3645bff541399d
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 10:19:21 2024 -0700
+
+    Moved room names so that they do not go off the border of the room and are better alligned with the room
+
+commit f1a4c090fcebbb58ca8e0a56d7e141d558161345
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 10:13:26 2024 -0700
+
+    Changed player size to better fit the cells
+
+commit 7386d46ac158818272ab64a893fce2ceb487be7f
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 10:07:47 2024 -0700
+
+    Moved getters and setters to the end of the code to clean it up
+
+commit 8e0496b91809f7b0beb721c7873df61eb60a6c36
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 09:59:38 2024 -0700
+
+    Added some inline comments where code can be hard to read and understand
+
+commit 1a038083cf3d88a64b54ebb96a18a643e3688afa
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 09:53:30 2024 -0700
+
+    Added header comments to functions with complex logic
+
+commit c7550376677b70c2115c77aafd6d109c5336c459
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 09:40:05 2024 -0700
+
+    Took out an unused function in card.java
+
+commit c2293d68fd42aeb24a13acfe1602da7f4c5869e2
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 18 23:23:10 2024 -0700
+
+    Action listeners
+
+commit 7048f3cf35ec0e073f0b962f7a38dc71f64e6e63
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 18 23:22:52 2024 -0700
+
+    Cell highlighting
+
+commit b0d55d760c91cc02e73c7710a8da2a3a50fbb3d9
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 18 23:22:34 2024 -0700
+
+    setRow() and setCol() methods
+
+commit 8d665cb0bb17c088776921e9b353b46447505730
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 18 23:22:12 2024 -0700
+
+    Manage game logic and process player turns
+
+commit 279bbe0354c3150ad9bd387ea60daa8b2c7017d0
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 18 23:21:40 2024 -0700
+
+    Display splash screen
+
+commit 9a19f5782e74ce38cba414f185192ac6ef3b568a
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Mon Nov 11 22:11:50 2024 -0700
+
+    Changed git log
+
 commit 33f18d47df3a625c31544c162ba92f1f29213ab4
 Author: kasperallais <kasper.allais@gmail.com>
 Date:   Mon Nov 11 22:11:26 2024 -0700
