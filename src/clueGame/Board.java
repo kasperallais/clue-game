@@ -46,10 +46,6 @@ public class Board extends JPanel{
     private Board() {
         addMouseListener(new BoardMouseListener());
     }
-
-    public void setControlPanel(GameControlPanel controlPanel) {
-        this.controlPanel = controlPanel;
-    }
     
     // Move to next player
     public void nextPlayer() {
@@ -196,10 +192,6 @@ public class Board extends JPanel{
         }
     }
 	
-    // singleton
-	public static Board getInstance() {
-		return theInstance;
-	}
 
 	// init the board and if it fails catch an exception
 	public void initialize() {
@@ -298,12 +290,6 @@ public class Board extends JPanel{
 	    return row >= 0 && row < numRows && col >= 0 && col < numColumns;
 	}
 
-	// set config file names
-	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
-		this.layoutConfigFile = layoutConfigFile;
-		this.setupConfigFile = setupConfigFile;
-	}
-
 	// find the wanted room and return the room
 	public Room getRoom(BoardCell cell) {
 		if (cell.isRoom()) { // Check if the cell is part of a room
@@ -312,28 +298,6 @@ public class Board extends JPanel{
         }
         return null; // Return null if the cell is not a room
     }
-	
-
-	public Room getRoom(char initial) {
-		return roomMap.get(initial);
-	}
-
-	public int getNumRows() {
-		return numRows;
-	}
-
-	public int getNumColumns() {
-		return numColumns;
-	}
-
-    public Set<BoardCell> getAdjList(int row, int col) {
-    	return adjList.get(getCell(row, col));
-    	
-    }
-	
-	public BoardCell getCell(int row, int col) {
-		return grid[row][col];
-	}
 	
 	// go through the setup file and load in what data we need to make the players, rooms and cards
 	public void loadSetupConfig() throws BadConfigFormatException {
@@ -518,10 +482,6 @@ public class Board extends JPanel{
 			}
 		}
 	}
-	
-    public Set<BoardCell> getTargets() {
-        return targets;
-    }
     
     // start a serach for all targets within a certian amount of space depending on roll
     public void calcTargets(BoardCell startCell, int pathLength) {
@@ -562,14 +522,6 @@ public class Board extends JPanel{
 		}
 	}
 	
-	public ArrayList<Player> getPlayers(){
-		return players;
-	}
-	
-	public ArrayList<Card> getDeck(){
-		return cardDeck;
-	}
-	
 	// make the solution and deal the cards out to players
     public void dealCards() {
         // Randomly select one room, one person, and one weapon as the solution
@@ -605,15 +557,6 @@ public class Board extends JPanel{
         }
         Random rand = new Random();
         return cardsOfType.get(rand.nextInt(cardsOfType.size()));
-    }
-
-
-    public Solution getSolution() {
-        return solution;
-    }
-    
-    public ArrayList<Card> getFullDeck() {
-    	return fullDeck;
     }
     
     // check to see if an accusation matches the solution
@@ -656,6 +599,7 @@ public class Board extends JPanel{
     	players.add(addedPlayer);
     }
     
+    // getter and setter methods
     // loop through players and find and return the human player
     public HumanPlayer getHumanPlayer() {
         for (Player player : players) {
@@ -665,4 +609,60 @@ public class Board extends JPanel{
         }
         return null;
     }
+    
+    public Room getRoom(char initial) {
+		return roomMap.get(initial);
+	}
+
+	public int getNumRows() {
+		return numRows;
+	}
+
+	public int getNumColumns() {
+		return numColumns;
+	}
+
+    public Set<BoardCell> getAdjList(int row, int col) {
+    	return adjList.get(getCell(row, col));
+    	
+    }
+	
+	public BoardCell getCell(int row, int col) {
+		return grid[row][col];
+	}
+	
+	public Solution getSolution() {
+        return solution;
+    }
+    
+    public ArrayList<Card> getFullDeck() {
+    	return fullDeck;
+    }
+    
+    public ArrayList<Player> getPlayers(){
+		return players;
+	}
+	
+	public ArrayList<Card> getDeck(){
+		return cardDeck;
+	}
+	
+	public Set<BoardCell> getTargets() {
+        return targets;
+    }
+	
+	public void setControlPanel(GameControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
+    }
+	
+	// set config file names
+	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
+		this.layoutConfigFile = layoutConfigFile;
+		this.setupConfigFile = setupConfigFile;
+	}
+	
+	// singleton
+	public static Board getInstance() {
+		return theInstance;
+	}
 }

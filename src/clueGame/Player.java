@@ -25,14 +25,6 @@ public abstract class Player {
         this.seenCards = new HashSet<Card>();
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
     // convert tje color for the player if needed
     private Color convertColor(String strColor) {
         Color color;
@@ -45,10 +37,6 @@ public abstract class Player {
         return color;
     }
 
-    public Color getColor() {
-        return this.color;
-    }
-
     // method to draw the players onto the board to make sure right size and color
     public void draw(Graphics g, int cellWidth, int cellHeight) {
         int x = this.col * cellWidth;
@@ -59,34 +47,6 @@ public abstract class Player {
         g.setColor(Color.BLACK);
         g.drawOval(x + cellWidth / 2 - playerSize / 2, y + cellHeight / 2 - playerSize / 2, playerSize, playerSize);
     }
-
-	public String getName() {
-		return this.name;
-	}
-
-	public int getCol() {
-		return this.col;
-	}
-
-	public int getRow() {
-		return this.row;
-	}
-
-	public ArrayList<Card> getHand() {
-		return hand;
-	}
-	
-	public Set<Card> getSeenCards() {
-	    return seenCards;
-	}
-
-	public void updateHand(Card card) {
-		hand.add(card);
-	}
-	
-	public void addSeenCard(Card card) {
-		seenCards.add(card);
-	}
 	
 	// method to check to see if a player has the cards in the suggestion and disprove it if so
 	public Card disproveSuggestion(Card suggestionRoom, Card suggestionPerson, Card suggestionWeapon) {
@@ -127,5 +87,46 @@ public abstract class Player {
 		extraCards.clear();
 		return null;
 
+	}
+	
+	// getters and setters methods
+	public String getName() {
+		return this.name;
+	}
+
+	public int getCol() {
+		return this.col;
+	}
+
+	public int getRow() {
+		return this.row;
+	}
+
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+	
+	public Set<Card> getSeenCards() {
+	    return seenCards;
+	}
+
+	public void updateHand(Card card) {
+		hand.add(card);
+	}
+	
+	public void addSeenCard(Card card) {
+		seenCards.add(card);
+	}
+	
+	public Color getColor() {
+        return this.color;
+    }
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
 	}
 }

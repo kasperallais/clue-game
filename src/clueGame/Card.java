@@ -34,6 +34,7 @@ public class Card {
 	    return false;
 	}
 	
+	// getter and setter methods
 	public void setColor(String color) {
 		this.color = color;
 	}
