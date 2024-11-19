@@ -10,10 +10,14 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Board extends JPanel{
 
@@ -32,7 +36,117 @@ public class Board extends JPanel{
 	private ArrayList<Card> cardDeck;
 	private ArrayList<Card> fullDeck;
 	private Solution solution;
+    private int currentPlayerIndex = -1;
+    private int diceRoll = 0;
+    private GameControlPanel controlPanel;
+    private boolean humanMustFinish = false;
 
+    // Add the mouse listener in the constructor
+    private Board() {
+        addMouseListener(new BoardMouseListener());
+    }
+
+    public void setControlPanel(GameControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
+    }
+
+    public void nextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        Player currentPlayer = players.get(currentPlayerIndex);
+
+        // Roll the dice
+        Random rand = new Random();
+        diceRoll = rand.nextInt(6) + 1; // Random number between 1 and 6
+
+        // Calculate targets
+        BoardCell startCell = getCell(currentPlayer.getRow(), currentPlayer.getCol());
+        calcTargets(startCell, diceRoll);
+
+        // Update the control panel
+        controlPanel.setTurn(currentPlayer, diceRoll);
+
+        if (currentPlayer instanceof ComputerPlayer) {
+            // Computer player's turn
+            ComputerPlayer computerPlayer = (ComputerPlayer) currentPlayer;
+            // Computer selects a target
+            BoardCell targetCell = computerPlayer.selectTargets(targets);
+
+            // Before moving, set current cell to unoccupied
+            startCell.setOccupied(false);
+            // Move the player to the selected target
+            currentPlayer.setRow(targetCell.getRow());
+            currentPlayer.setCol(targetCell.getCol());
+            // After moving, set new cell to occupied
+            targetCell.setOccupied(true);
+
+            // Repaint the board
+            repaint();
+        } else if (currentPlayer instanceof HumanPlayer) {
+            // Human player's turn
+            humanMustFinish = true;
+            // Highlight possible targets
+            for (BoardCell cell : targets) {
+                cell.setHighlighted(true);
+            }
+            repaint();
+        }
+    }
+
+
+    public boolean isHumanMustFinish() {
+        return humanMustFinish;
+    }
+
+    private class BoardMouseListener extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // Only process clicks during human player's turn
+            if (!(players.get(currentPlayerIndex) instanceof HumanPlayer)) {
+                return;
+            }
+
+            if (!humanMustFinish) {
+                return; // Ignore clicks if human has already moved
+            }
+
+            HumanPlayer humanPlayer = (HumanPlayer) players.get(currentPlayerIndex);
+
+            int x = e.getX();
+            int y = e.getY();
+            int cellWidth = getWidth() / numColumns;
+            int cellHeight = getHeight() / numRows;
+            int col = x / cellWidth;
+            int row = y / cellHeight;
+
+            BoardCell clickedCell = getCell(row, col);
+
+            // If the clicked cell is a valid target
+            if (targets.contains(clickedCell)) {
+                // Before moving, set current cell to unoccupied
+                BoardCell currentCell = getCell(humanPlayer.getRow(), humanPlayer.getCol());
+                currentCell.setOccupied(false);
+                // Move the player
+                humanPlayer.setRow(row);
+                humanPlayer.setCol(col);
+                // After moving, set new cell to occupied
+                clickedCell.setOccupied(true);
+
+                // Clear highlights
+                for (BoardCell cell : targets) {
+                    cell.setHighlighted(false);
+                }
+                repaint();
+
+                // Finish the human player's turn
+                humanMustFinish = false;
+
+                // Clear the targets
+                targets.clear();
+
+            }
+        }
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -243,7 +357,7 @@ public class Board extends JPanel{
 						int tempCol = Integer.parseInt(parts[4]);
 						if (parts[2].equals("Human")) {
 							HumanPlayer newHuman = new HumanPlayer(parts[0], parts[1], tempRow, tempCol);
-							players.add(newHuman);
+							players.add(0, newHuman);
 						} else {
 							ComputerPlayer newComp = new ComputerPlayer(parts[0], parts[1], tempRow, tempCol);
 							players.add(newComp);
@@ -512,5 +626,14 @@ public class Board extends JPanel{
     
     public void addPlayerTest(Player addedPlayer) {
     	players.add(addedPlayer);
+    }
+    
+    public HumanPlayer getHumanPlayer() {
+        for (Player player : players) {
+            if (player instanceof HumanPlayer) {
+                return (HumanPlayer) player;
+            }
+        }
+        return null;
     }
 }
