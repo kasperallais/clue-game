@@ -43,6 +43,7 @@ public class ComputerPlayer extends Player{
 	    List<BoardCell> otherTargets = new ArrayList<>();
 
 	    for (BoardCell cell : targets) {
+	    	// loop through the target cells
 	        if (cell.isRoom() && !getSeenCards().contains(new Card(cell.getName(), CardType.ROOM))) {
 	            unseenRooms.add(cell);
 	        } else {

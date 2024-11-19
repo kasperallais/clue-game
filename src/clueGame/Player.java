@@ -95,6 +95,7 @@ public abstract class Player {
 		
 		Set<Card> extraCards = new HashSet<Card>();
 		for (int i = 0; i < hand.size(); i++) {
+			// loop through hand and see if the suggestion cards are in the hand of this player
 			if (hand.get(i).getName().equals(suggestionRoom.getName())) {
 				extraCards.add(hand.get(i));
 			}
@@ -105,11 +106,13 @@ public abstract class Player {
 				extraCards.add(hand.get(i));
 			}
 		}
-
+		
+		// if only one card matches the suggestion return it
 		if (extraCards.size() == 1){
 			for (Card card: extraCards) {
 				return card;
 			}
+		// if multiple cards match suggestion return them all
 		} else if (extraCards.size() > 1){
 			
 			int counter = 0;

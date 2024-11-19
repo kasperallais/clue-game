@@ -346,6 +346,7 @@ public class Board extends JPanel{
 				fullDeck = new ArrayList<Card>();
 				while (reader.hasNextLine()) {
 					String line = reader.nextLine().trim();
+					// skip lines with // in front
 					if (line.startsWith("//") || line.isEmpty()) {
 						continue;
 					}
@@ -369,6 +370,7 @@ public class Board extends JPanel{
 						space.setInitial(spaceInitial);
 						roomMap.put(spaceInitial, space);	
 					} else if (parts.length == 5) {
+						// if the length is 5 that means its a player
 						int tempRow = Integer.parseInt(parts[3]);
 						int tempCol = Integer.parseInt(parts[4]);
 						if (parts[2].equals("Human")) {
@@ -381,6 +383,7 @@ public class Board extends JPanel{
 						Card newCard = new Card(parts[0], CardType.PERSON);
 						cardDeck.add(newCard);
 						fullDeck.add(newCard);
+						// if the length is one that means its a card
 					} else if (parts.length == 1) {
 						Card newCard = new Card(parts[0], CardType.WEAPON);
 						cardDeck.add(newCard);
@@ -482,6 +485,7 @@ public class Board extends JPanel{
 			throw new BadConfigFormatException("Layout config file not found");
 		}
 		
+		// loops through grid to find the doorways into rooms and then setting a cell in the room class to that cell
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				BoardCell doorCell = grid[i][j];
@@ -627,6 +631,7 @@ public class Board extends JPanel{
     // check to see if a suggestion can be disproven or not
     public Card handleSuggestion(Player suggester, Card suggRoom, Card suggPerson, Card SuggWeapon) {
     	for (Player currentPlayer: players) {
+    		// looping through players and running the method to see if a player can disprove the suggestion
     		Card returned = currentPlayer.disproveSuggestion(suggRoom, suggPerson, SuggWeapon);
     		if (returned == null) {
     			continue;
