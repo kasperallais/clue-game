@@ -33,7 +33,7 @@ public abstract class Player {
         this.col = col;
     }
 
-    
+    // convert tje color for the player if needed
     private Color convertColor(String strColor) {
         Color color;
         try {
@@ -49,6 +49,7 @@ public abstract class Player {
         return this.color;
     }
 
+    // method to draw the players onto the board to make sure right size and color
     public void draw(Graphics g, int cellWidth, int cellHeight) {
         int x = this.col * cellWidth;
         int y = this.row * cellHeight;
@@ -86,7 +87,8 @@ public abstract class Player {
 	public void addSeenCard(Card card) {
 		seenCards.add(card);
 	}
-
+	
+	// method to check to see if a player has the cards in the suggestion and disprove it if so
 	public Card disproveSuggestion(Card suggestionRoom, Card suggestionPerson, Card suggestionWeapon) {
 		Random random = new Random();
 		int rn = random.nextInt(2 - 0 + 0) + 0;

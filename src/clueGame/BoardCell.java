@@ -35,7 +35,8 @@ public class BoardCell {
         this.col = col;
         this.adjList = new HashSet<>();
     }
-
+    
+    // method to draw the cells to make sure right width, height, and color
     public void draw(Graphics g, int cellWidth, int cellHeight) {
         int x = col * cellWidth;
         int y = row * cellHeight;

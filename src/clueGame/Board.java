@@ -20,7 +20,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Board extends JPanel{
-
+	
+	// create variables
 	private static Board theInstance = new Board();
 	private BoardCell[][] grid;
 	private Set<BoardCell> targets;
@@ -49,7 +50,8 @@ public class Board extends JPanel{
     public void setControlPanel(GameControlPanel controlPanel) {
         this.controlPanel = controlPanel;
     }
-
+    
+    // Move to next player
     public void nextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         Player currentPlayer = players.get(currentPlayerIndex);
@@ -97,6 +99,7 @@ public class Board extends JPanel{
         return humanMustFinish;
     }
 
+    // gets where the player clicked and to move the player to that spot
     private class BoardMouseListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -147,6 +150,7 @@ public class Board extends JPanel{
         }
     }
     
+    // draws the cells and makes them correct colors
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -170,6 +174,7 @@ public class Board extends JPanel{
         drawPlayers(g, cellWidth, cellHeight);
     }
 
+    // display the room names
     private void drawRoomNames(Graphics g, int cellWidth, int cellHeight) {
         g.setColor(Color.BLACK);
         g.setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -183,17 +188,20 @@ public class Board extends JPanel{
             }
         }
     }
-
+    
+    // loop through and draw the players
     private void drawPlayers(Graphics g, int cellWidth, int cellHeight) {
         for (Player player : players) {
             player.draw(g, cellWidth, cellHeight);
         }
     }
 	
+    // singleton
 	public static Board getInstance() {
 		return theInstance;
 	}
 
+	// init the board and if it fails catch an exception
 	public void initialize() {
 		try {
 			loadSetupConfig();
@@ -205,6 +213,7 @@ public class Board extends JPanel{
 		}
 	}
 	
+	// finds adjcanent squares to the human and computer players
 	public void findAdj() {
 	    // Iterate through all cells to determine adjacency
 	    for (int i = 0; i < numRows; i++) {
@@ -225,6 +234,7 @@ public class Board extends JPanel{
 	    }
 	}
 
+	// helper function for findAdj which makes sure spots near doors work
 	private void addDoorwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
 	    addAdjacentWalkways(row, col, adjacencies);
 	    
@@ -246,11 +256,13 @@ public class Board extends JPanel{
 	        adjacencies.add(roomCenter);
 	    }
 	}
-
+	
+	// helper function for findAdj 
 	private void addWalkwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
 	    addAdjacentWalkways(row, col, adjacencies);
 	}
 
+	// helper function for findAdj to make sure nearby walkways are in bounds
 	private void addAdjacentWalkways(int row, int col, Set<BoardCell> adjacencies) {
 	    if (isInBounds(row + 1, col) && getCell(row + 1, col).isWalkway()) {
 	        adjacencies.add(getCell(row + 1, col));
@@ -266,6 +278,8 @@ public class Board extends JPanel{
 	    }
 	}
 
+	// helper function for findAdj to make sure rooms nearby get added to adj list
+
 	private void addRoomAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
 	    BoardCell currentCell = getCell(row, col);
 	    Room room = roomMap.get(currentCell.getInitial());
@@ -279,17 +293,18 @@ public class Board extends JPanel{
 	    }
 	}
 
+	// check to see if spot is in the board
 	private boolean isInBounds(int row, int col) {
 	    return row >= 0 && row < numRows && col >= 0 && col < numColumns;
 	}
 
-
+	// set config file names
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
 		this.layoutConfigFile = layoutConfigFile;
 		this.setupConfigFile = setupConfigFile;
 	}
 
-
+	// find the wanted room and return the room
 	public Room getRoom(BoardCell cell) {
 		if (cell.isRoom()) { // Check if the cell is part of a room
             char roomInitial = cell.getInitial();
@@ -319,7 +334,8 @@ public class Board extends JPanel{
 	public BoardCell getCell(int row, int col) {
 		return grid[row][col];
 	}
-
+	
+	// go through the setup file and load in what data we need to make the players, rooms and cards
 	public void loadSetupConfig() throws BadConfigFormatException {
 		try {
 			File file = new File(setupConfigFile);
@@ -382,6 +398,7 @@ public class Board extends JPanel{
 		}
 	}
 
+	// go through the layout file and load in the board into a 2d array
 	public void loadLayoutConfig() throws BadConfigFormatException {
 		try {
 			File file = new File(layoutConfigFile);
@@ -502,12 +519,14 @@ public class Board extends JPanel{
         return targets;
     }
     
+    // start a serach for all targets within a certian amount of space depending on roll
     public void calcTargets(BoardCell startCell, int pathLength) {
     	visited = new HashSet<BoardCell>();
 		targets = new HashSet<BoardCell>();
 		findAllTargets(startCell, pathLength);
     }
     
+    // recursive function to find all nearby spots
 	public void findAllTargets(BoardCell startCell, int pathLength) {
 		// Find adjacent cells of parameter cell each time
 		//findAdj();
@@ -547,6 +566,7 @@ public class Board extends JPanel{
 		return cardDeck;
 	}
 	
+	// make the solution and deal the cards out to players
     public void dealCards() {
         // Randomly select one room, one person, and one weapon as the solution
         Card room = getRandomCardOfType(CardType.ROOM);
@@ -567,7 +587,8 @@ public class Board extends JPanel{
             playerIndex = (playerIndex + 1) % players.size();
         }
     }
-
+    
+    // get a random card of a certain type
     private Card getRandomCardOfType(CardType type) {
         ArrayList<Card> cardsOfType = new ArrayList<>();
         for (Card card : cardDeck) {
@@ -591,6 +612,7 @@ public class Board extends JPanel{
     	return fullDeck;
     }
     
+    // check to see if an accusation matches the solution
     public boolean checkAccusation(Card room, Card person, Card weapon) {
     	if (room.getName().equals(solution.getRoom().getName())){
     		if (person.getName().equals(solution.getPerson().getName())) {
@@ -602,6 +624,7 @@ public class Board extends JPanel{
     	return false;
     }
     
+    // check to see if a suggestion can be disproven or not
     public Card handleSuggestion(Player suggester, Card suggRoom, Card suggPerson, Card SuggWeapon) {
     	for (Player currentPlayer: players) {
     		Card returned = currentPlayer.disproveSuggestion(suggRoom, suggPerson, SuggWeapon);
@@ -628,6 +651,7 @@ public class Board extends JPanel{
     	players.add(addedPlayer);
     }
     
+    // loop through players and find and return the human player
     public HumanPlayer getHumanPlayer() {
         for (Player player : players) {
             if (player instanceof HumanPlayer) {

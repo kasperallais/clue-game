@@ -10,6 +10,7 @@ public class ComputerPlayer extends Player{
 		super(name, color, row, col);
 	}
 	
+	// function so that the computer players can make their own suggestions
 	public Solution createSuggestion(Room currentRoom) {
 	    Card roomCard = new Card(currentRoom.getName(), CardType.ROOM);
 
@@ -36,6 +37,7 @@ public class ComputerPlayer extends Player{
 	    return new Solution(roomCard, weaponCard, personCard);
 	}
 	
+	// method to help computer players make decsions on what square to move to
 	public BoardCell selectTargets(Set<BoardCell> targets) {
 	    List<BoardCell> unseenRooms = new ArrayList<>();
 	    List<BoardCell> otherTargets = new ArrayList<>();
