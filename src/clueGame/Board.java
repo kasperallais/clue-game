@@ -180,7 +180,7 @@ public class Board extends JPanel{
             if (labelCell != null) {
                 int x = labelCell.getCol() * cellWidth;
                 int y = labelCell.getRow() * cellHeight;
-                g.drawString(room.getName(), x, y);
+                g.drawString(room.getName(), x-18, y);
             }
         }
     }

@@ -17,7 +17,7 @@ Toby Mack, GREEN, Computer, 16, 17
 John Cena, PINK, Computer, 20, 20
 Max Verstappen, BLUE, Computer, 15, 3
 Alex Honnold, ORANGE, Computer, 6, 17
-George Washington, GRAY, Computer, 10, 10
+George Washington, GRAY, Computer, 10, 5
 // Weapons
 Revolver
 Knife
