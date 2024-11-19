@@ -25,6 +25,15 @@ public abstract class Player {
         this.seenCards = new HashSet<Card>();
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    
     private Color convertColor(String strColor) {
         Color color;
         try {
