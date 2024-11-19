@@ -73,6 +73,7 @@ public class GameCardPanel extends JPanel{
 		
 		if (handPeople.size() == 0) {
 			peopleHand = new JTextField("None");
+			peopleHand.setEditable(false);
 			panel.add(peopleHand);
 		} else {
 			loopThrough(handPeople, panel);
@@ -81,6 +82,8 @@ public class GameCardPanel extends JPanel{
 		panel.add(peopleInSeen);
 		if (seenPeople.size() == 0) {
 			peopleSeen = new JTextField("None");
+			peopleSeen.setEditable(false);
+			panel.add(peopleSeen);
 		} else {
 			loopThrough(seenPeople, panel);
 		}
@@ -104,6 +107,7 @@ public class GameCardPanel extends JPanel{
 		
 		if (handRoom.size() == 0) {
 			roomHand = new JTextField("None");
+			roomHand.setEditable(false);
 			panel.add(roomHand);
 		} else {
 			loopThrough(handRoom, panel);
@@ -114,6 +118,7 @@ public class GameCardPanel extends JPanel{
 		
 		if (seenRoom.size() == 0) {
 			roomSeen = new JTextField("None");
+			roomSeen.setEditable(false);
 			panel.add(roomSeen);
 		} else {
 			loopThrough(seenRoom, panel);
@@ -136,6 +141,7 @@ public class GameCardPanel extends JPanel{
 		panel.add(weaponInHand);
 		if (handWeapon.size() == 0) {
 			weaponHand = new JTextField("None");
+			weaponHand.setEditable(false);
 			panel.add(weaponHand);
 		} else {
 			loopThrough(handWeapon, panel);
@@ -145,6 +151,7 @@ public class GameCardPanel extends JPanel{
 		panel.add(weaponInSeen);
 		if (seenWeapon.size() == 0) {
 			weaponSeen = new JTextField("None");
+			weaponSeen.setEditable(false);
 			panel.add(weaponSeen);
 		} else {
 			loopThrough(seenWeapon, panel);
@@ -191,6 +198,7 @@ public class GameCardPanel extends JPanel{
 		for (Card c: cardArray) {
 			JTextField newAddition = new JTextField(c.getName());
 			newAddition.setBackground(getColor(c.getColor()));
+			newAddition.setEditable(false);
 			panel.add(newAddition);
 		}
 	}

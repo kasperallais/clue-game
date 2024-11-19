@@ -3,6 +3,7 @@ package clueGame;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 public class ClueGame extends JFrame {
     private static final int WIDTH = 900;
@@ -30,6 +31,7 @@ public class ClueGame extends JFrame {
 
         // Add the KnownCardsPanel to the east
         GameCardPanel cardPanel = new GameCardPanel();
+        cardPanel.setPreferredSize(new Dimension(180, HEIGHT));
         add(cardPanel, BorderLayout.EAST);
 
         // Set references so Board and GameControlPanel can communicate
