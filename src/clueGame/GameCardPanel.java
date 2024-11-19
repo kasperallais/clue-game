@@ -75,22 +75,14 @@ public class GameCardPanel extends JPanel{
 			peopleHand = new JTextField("None");
 			panel.add(peopleHand);
 		} else {
-			for (Card c: handPeople) {
-				JTextField newPeopleHand = new JTextField(c.getName());
-				newPeopleHand.setBackground(getColor(c.getColor()));
-				panel.add(newPeopleHand);
-			}
+			loopThrough(handPeople, panel);
 		}
 		
 		panel.add(peopleInSeen);
 		if (seenPeople.size() == 0) {
 			peopleSeen = new JTextField("None");
 		} else {
-			for (Card c: seenPeople) {
-				JTextField newPeopleSeen = new JTextField(c.getName());
-				newPeopleSeen.setBackground(getColor(c.getColor()));
-				panel.add(newPeopleSeen);
-			}
+			loopThrough(seenPeople, panel);
 		}
 		
 		peopleHand.setBorder(new EtchedBorder());
@@ -114,11 +106,7 @@ public class GameCardPanel extends JPanel{
 			roomHand = new JTextField("None");
 			panel.add(roomHand);
 		} else {
-			for (Card c: handRoom) {
-				JTextField newRoomHand = new JTextField(c.getName());
-				newRoomHand.setBackground(getColor(c.getColor()));
-				panel.add(newRoomHand);
-			}
+			loopThrough(handRoom, panel);
 		}
 		
 		roomInSeen = new JLabel("Seen");
@@ -128,11 +116,7 @@ public class GameCardPanel extends JPanel{
 			roomSeen = new JTextField("None");
 			panel.add(roomSeen);
 		} else {
-			for (Card c: seenRoom) {
-				JTextField newRoomSeen = new JTextField(c.getName());
-				newRoomSeen.setBackground(getColor(c.getColor()));
-				panel.add(newRoomSeen);
-			}
+			loopThrough(seenRoom, panel);
 		}
 		
 		roomHand.setBorder(new EtchedBorder());
@@ -154,11 +138,7 @@ public class GameCardPanel extends JPanel{
 			weaponHand = new JTextField("None");
 			panel.add(weaponHand);
 		} else {
-			for (Card c: handWeapon) {
-				JTextField newHandWeapon = new JTextField(c.getName());
-				newHandWeapon.setBackground(getColor(c.getColor()));
-				panel.add(newHandWeapon);
-			}
+			loopThrough(handWeapon, panel);
 		}
 		
 		weaponInSeen = new JLabel("Seen");
@@ -167,13 +147,8 @@ public class GameCardPanel extends JPanel{
 			weaponSeen = new JTextField("None");
 			panel.add(weaponSeen);
 		} else {
-			for (Card c: seenWeapon) {
-				JTextField newSeenWeapon = new JTextField(c.getName());
-				newSeenWeapon.setBackground(getColor(c.getColor()));
-				panel.add(newSeenWeapon);
-			}
+			loopThrough(seenWeapon, panel);
 		}
-		
 		
 		weaponHand.setBorder(new EtchedBorder());
 		weaponSeen.setBorder(new EtchedBorder());
@@ -210,6 +185,14 @@ public class GameCardPanel extends JPanel{
 	public void addWeaponSeen(Card card) {
 		seenWeapon.add(card);
 		updatePanels();
+	}
+	
+	public void loopThrough(ArrayList<Card> cardArray, JPanel panel) {
+		for (Card c: cardArray) {
+			JTextField newAddition = new JTextField(c.getName());
+			newAddition.setBackground(getColor(c.getColor()));
+			panel.add(newAddition);
+		}
 	}
 	
 	public Color getColor(String color) {
