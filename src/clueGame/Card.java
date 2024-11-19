@@ -33,12 +33,6 @@ public class Card {
 
 	    return false;
 	}
-
-	@Override
-	public int hashCode() {
-	    // Generate a hash code based on the card name and type
-	    return cardName.hashCode() + cardType.hashCode();
-	}
 	
 	public void setColor(String color) {
 		this.color = color;
