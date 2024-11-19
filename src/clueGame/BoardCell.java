@@ -20,6 +20,16 @@ public class BoardCell {
     private char secretPassage = ' ';
     private Set<BoardCell> adjList;
 
+    private boolean isHighlighted = false;
+
+    public boolean isHighlighted() {
+        return isHighlighted;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        this.isHighlighted = highlighted;
+    }
+    
     public BoardCell(int row, int col) {
         this.row = row;
         this.col = col;
@@ -30,7 +40,12 @@ public class BoardCell {
         int x = col * cellWidth;
         int y = row * cellHeight;
 
-        if (isWalkway()) {
+        if (isHighlighted) {
+            g.setColor(Color.CYAN);
+            g.fillRect(x, y, cellWidth, cellHeight);
+            g.setColor(Color.BLACK);
+            g.drawRect(x, y, cellWidth, cellHeight);
+        } else if (isWalkway()) {
             g.setColor(Color.YELLOW);
             g.fillRect(x, y, cellWidth, cellHeight);
             g.setColor(Color.BLACK);
