@@ -19,6 +19,11 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+
 public class Board extends JPanel{
 	
 	// create variables
@@ -41,6 +46,7 @@ public class Board extends JPanel{
     private int diceRoll = 0;
     private GameControlPanel controlPanel;
     private boolean humanMustFinish = false;
+    private static JDialog d;  
 
     // Add the mouse listener in the constructor
     private Board() {
@@ -82,6 +88,7 @@ public class Board extends JPanel{
         } else if (currentPlayer instanceof HumanPlayer) {
             // Human player's turn
             humanMustFinish = true;
+            
             // Highlight possible targets
             for (BoardCell cell : targets) {
                 cell.setHighlighted(true);
@@ -135,6 +142,18 @@ public class Board extends JPanel{
                     cell.setHighlighted(false);
                 }
                 repaint();
+                
+                
+                if (currentCell.isRoom()) {
+                	JFrame f= new JFrame();  
+                    d = new JDialog(f , "Dialog Example", true);  
+                    d.setLayout( new FlowLayout() );  
+                    JButton b = new JButton ("OK");  
+                    d.add( new JLabel ("Click button to continue."));  
+                    d.add(b);   
+                    d.setSize(300,300);    
+                    d.setVisible(true); 
+                }
 
                 // Finish the human player's turn
                 humanMustFinish = false;

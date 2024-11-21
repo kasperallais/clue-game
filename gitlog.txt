@@ -1,3 +1,17 @@
+commit fbdef55a9a75176519808b82509a32aecb63a514
+Merge: 6dac5e6 43d2bab
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 11:05:36 2024 -0700
+
+    Merge branch 'addComments'
+    added comments to the gameCardPanel
+
+commit 43d2bab9439d0826b91aefd8844fe382a76686f1
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Tue Nov 19 11:04:54 2024 -0700
+
+    Added a comment header to a method
+
 commit 6dac5e604cef74cfdd4054a7d9fdd49b6c5a5b78
 Author: “Michael <“michael_tetreault@mines.edu”>
 Date:   Tue Nov 19 10:48:02 2024 -0700
