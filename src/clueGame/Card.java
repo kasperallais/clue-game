@@ -1,8 +1,10 @@
 package clueGame;
 
+import java.awt.Color;
+
 public class Card {
 	String cardName;
-	String color;
+	Color color;
 	CardType cardType;
 	
 	public Card(String name, CardType type) {
@@ -10,7 +12,7 @@ public class Card {
 		this.cardType = type;
 	}
 	
-	public Card(String name, String color, CardType type) {
+	public Card(String name, Color color, CardType type) {
 		this.cardName = name;
 		this.color = color;
 		this.cardType = type;
@@ -34,12 +36,14 @@ public class Card {
 	    return false;
 	}
 	
+	
+	
 	// getter and setter methods
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 	
-	public String getColor() {
+	public Color getColor() {
 		return this.color;
 	}
 
