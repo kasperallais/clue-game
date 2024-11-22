@@ -142,17 +142,17 @@ public class GameControlPanel extends JPanel {
         frame.setVisible(true); // make it visible
 
         // test filling in the data
-        panel.setTurn(new ComputerPlayer( "Col. Mustard", "orange", 0, 0),5);
-        panel.setGuess( "I have no guess!");
-        panel.setGuessResult( "So you have nothing?");
+        panel.setTurn(new ComputerPlayer( "Col. Mustard", Color.orange, 0, 0),5);
     }
 
-    public void setGuess(String s) {
-        this.guessText.setText(s);
+    public void setGuess(Card c1, Card c2, Card c3, Color c) {
+    	this.guessText.setBackground(c);
+        this.guessText.setText(c1.getName() + ", " + c2.getName() + ", " + c3.getName());
     }
 
-    public void setGuessResult(String s) {
-        this.responseText.setText(s);
+    public void setGuessResult(Card card) {
+        this.responseText.setText(card.getName());
+        this.responseText.setBackground(card.getColor());
     }
 
     public void setTurn(Player player, int roll) {
