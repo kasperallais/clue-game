@@ -16,16 +16,16 @@ public abstract class Player {
     private ArrayList<Card> hand;
     private Set<Card> seenCards;
 
-    Player(String name, String colorStr, int row, int col){
+    Player(String name, Color color, int row, int col){
         this.name = name;
-        this.color = convertColor(colorStr);
+        this.color = color;
         this.row = row;
         this.col = col;
         this.hand = new ArrayList<>();
         this.seenCards = new HashSet<Card>();
     }
 
-    // convert tje color for the player if needed
+    // convert to color for the player if needed
     private Color convertColor(String strColor) {
         Color color;
         try {
