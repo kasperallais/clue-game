@@ -198,29 +198,10 @@ public class GameCardPanel extends JPanel{
 	public void loopThrough(ArrayList<Card> cardArray, JPanel panel) {
 		for (Card c: cardArray) {
 			JTextField newAddition = new JTextField(c.getName());
-			newAddition.setBackground(getColor(c.getColor()));
+			newAddition.setBackground(c.getColor());
 			newAddition.setEditable(false);
 			panel.add(newAddition);
 		}
-	}
-	
-	public Color getColor(String color) {
-		Color returnColor = Color.white;
-		switch(color) {
-		case "orange":
-			returnColor = Color.orange;
-			break;
-		case "green": 
-			returnColor = Color.green;
-			break;
-		case "blue":
-			returnColor = Color.blue;
-			break;
-		case "pink":
-			returnColor = Color.pink;
-			break;
-		}
-		return returnColor;
 	}
 	
 	public void updatePanels() {		
@@ -243,30 +224,6 @@ public class GameCardPanel extends JPanel{
 		frame.setSize(180, 750);  // size the frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
 		frame.setVisible(true); // make it visible
-		
-		// test filling in the data
-		panel.addPeopleHand(new Card( "Col. Mustard", "white", CardType.PERSON));
-		
-		panel.addPeopleSeen(new Card( "Mrs White", "orange", CardType.PERSON));
-		panel.addPeopleSeen(new Card( "Ms Scarlett", "white", CardType.PERSON));
-		panel.addPeopleSeen(new Card( "Mrs Peacock", "green", CardType.PERSON));
-		panel.addPeopleSeen(new Card( "Reverend Green", "blue", CardType.PERSON));
-		
-		panel.addRoomSeen(new Card( "Hall", "orange", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Ballroom", "white", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Kitchen", "white", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Billiard Room", "green", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Conservatory", "green", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Lounge", "blue", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Library", "blue", CardType.ROOM));
-		panel.addRoomSeen(new Card( "Dining Room", "pink", CardType.ROOM));
-		
-		panel.addWeaponHand(new Card( "Wrench", "white", CardType.WEAPON));
-		panel.addWeaponHand(new Card( "Rope", "white", CardType.WEAPON));
-		
-		panel.addWeaponSeen(new Card( "Lead Pipe", "orange", CardType.WEAPON));
-		panel.addWeaponSeen(new Card( "Dagger", "pink", CardType.WEAPON));
-		panel.addWeaponSeen(new Card( "Revolver", "pink", CardType.WEAPON));
 		
 	}
 }
