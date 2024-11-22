@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.HashSet;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -45,6 +46,7 @@ public class Board extends JPanel{
     private int currentPlayerIndex = -1;
     private int diceRoll = 0;
     private GameControlPanel controlPanel;
+    private GameCardPanel cardPanel;
     private boolean humanMustFinish = false;
     private static JDialog d;  
 
@@ -144,15 +146,34 @@ public class Board extends JPanel{
                 repaint();
                 
                 
-                if (currentCell.isRoom()) {
-                	JFrame f= new JFrame();  
-                    d = new JDialog(f , "Dialog Example", true);  
-                    d.setLayout( new FlowLayout() );  
-                    JButton b = new JButton ("OK");  
-                    d.add( new JLabel ("Click button to continue."));  
-                    d.add(b);   
-                    d.setSize(300,300);    
-                    d.setVisible(true); 
+                if (clickedCell.getInitial() != 'W') {
+                    // Show suggestion dialog
+                    Room currentRoom = getRoom(clickedCell); // Retrieve the room object
+                    SuggestionPanel suggestionDialog = new SuggestionPanel(
+                        (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
+                        currentRoom.getName()
+                    );
+
+                    suggestionDialog.setVisible(true); // Display the dialog
+
+                    // Handle suggestion result
+                    String person = suggestionDialog.getSelectedPerson();
+                    String weapon = suggestionDialog.getSelectedWeapon();
+
+                    if (person != null && weapon != null) {
+                        // Process the suggestion (example: use handleSuggestion method)
+                        Card roomCard = new Card(currentRoom.getName(), CardType.ROOM);
+                        Card personCard = new Card(person, CardType.PERSON);
+                        Card weaponCard = new Card(weapon, CardType.WEAPON);
+
+                        Card disprovingCard = handleSuggestion(humanPlayer, roomCard, personCard, weaponCard);
+
+                        // Display the result
+                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
+                        if (disprovingCard != null) {
+                        	controlPanel.setGuessResult(disprovingCard);
+                        }
+                    }
                 }
 
                 // Finish the human player's turn
@@ -210,7 +231,8 @@ public class Board extends JPanel{
             player.draw(g, cellWidth, cellHeight);
         }
     }
-	
+    
+    
 
 	// init the board and if it fails catch an exception
 	public void initialize() {
@@ -357,10 +379,10 @@ public class Board extends JPanel{
 						int tempRow = Integer.parseInt(parts[3]);
 						int tempCol = Integer.parseInt(parts[4]);
 						if (parts[2].equals("Human")) {
-							HumanPlayer newHuman = new HumanPlayer(parts[0], parts[1], tempRow, tempCol);
+							HumanPlayer newHuman = new HumanPlayer(parts[0], convertColor(parts[1]), tempRow, tempCol);
 							players.add(0, newHuman);
 						} else {
-							ComputerPlayer newComp = new ComputerPlayer(parts[0], parts[1], tempRow, tempCol);
+							ComputerPlayer newComp = new ComputerPlayer(parts[0], convertColor(parts[1]), tempRow, tempCol);
 							players.add(newComp);
 						}
 						Card newCard = new Card(parts[0], CardType.PERSON);
@@ -384,6 +406,31 @@ public class Board extends JPanel{
 		}
 	}
 
+	public Color convertColor(String color) {
+		Color returnColor = Color.white;
+		switch(color) {
+		case "RED":
+			returnColor = Color.red;
+			break;
+		case "GREEN":
+			returnColor = Color.green;
+			break;
+		case "PINK":
+			returnColor = Color.pink;
+			break;
+		case "BLUE":
+			returnColor = Color.blue;
+			break;
+		case "ORANGE":
+			returnColor = Color.orange;
+			break;
+		case "GRAY":
+			returnColor = Color.gray;
+			break;
+		}
+		return returnColor;
+	}
+	
 	// go through the layout file and load in the board into a 2d array
 	public void loadLayoutConfig() throws BadConfigFormatException {
 		try {
@@ -557,7 +604,8 @@ public class Board extends JPanel{
         // Shuffle and deal the remaining cards to players
         int playerIndex = 0;
         for (Card card : cardDeck) {
-            players.get(playerIndex).updateHand(card);
+            card.setColor(players.get(playerIndex).getColor());
+        	players.get(playerIndex).updateHand(card);
             players.get(playerIndex).addSeenCard(card);
             playerIndex = (playerIndex + 1) % players.size();
         }
@@ -673,6 +721,32 @@ public class Board extends JPanel{
 	public void setControlPanel(GameControlPanel controlPanel) {
         this.controlPanel = controlPanel;
     }
+	
+	public void setCardPanel(GameCardPanel cardPanel) {
+		this.cardPanel = cardPanel;
+		for (Player p : players) {
+	        if (p instanceof HumanPlayer) {
+	        	ArrayList<Card> hand = p.getHand();
+	        	for (Card c : hand) {
+	        		if (c.getCardType() == CardType.PERSON) {
+	        			Color color = p.getColor();
+	        			c.setColor(color);
+	        			cardPanel.addPeopleHand(c);
+	        		}
+	        		if (c.getCardType() == CardType.WEAPON) {
+	        			Color color = p.getColor();
+	        			c.setColor(color);
+	        			cardPanel.addWeaponHand(c);
+	        		}
+	        		if (c.getCardType() == CardType.ROOM) {
+	        			Color color = p.getColor();
+	        			c.setColor(color);
+	        			cardPanel.addRoomHand(c);
+	        		}
+	        	}
+	        }
+		}
+	}
 	
 	// set config file names
 	public void setConfigFiles(String layoutConfigFile, String setupConfigFile) {
