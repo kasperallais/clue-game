@@ -36,6 +36,7 @@ public class ClueGame extends JFrame {
 
         // Set references so Board and GameControlPanel can communicate
         board.setControlPanel(controlPanel);
+        board.setCardPanel(cardPanel);
         controlPanel.setBoard(board);
     }
 
