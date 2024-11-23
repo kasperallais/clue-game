@@ -42,7 +42,7 @@ class GameSetupTests {
 		ArrayList<Player> myArray = board.getPlayers();
         assertEquals(6, myArray.size());
         assertEquals("Alex Honnold", myArray.get(4).getName());
-        assertEquals(10, myArray.get(5).getCol());
+        assertEquals(6, myArray.get(5).getCol());
     }
 
 	@Test

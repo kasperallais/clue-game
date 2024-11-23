@@ -3,6 +3,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ class GameSolutionTest {
 	
 	@Test
 	public void testDisproveSuggestion() {
-		Player testPlayer = new HumanPlayer("TestPlayer", "CYAN", 5, 5);
+		Player testPlayer = new HumanPlayer("TestPlayer", Color.CYAN, 5, 5);
 		Card extraRoom = new Card("extraRoom", CardType.ROOM);
 		Card extraPerson = new Card("extraperson", CardType.PERSON);
 		Card extraWeapon = new Card("extraweapon", CardType.WEAPON);
@@ -86,9 +87,9 @@ class GameSolutionTest {
 	
 	@Test
 	public void testHandleSuggestion() {
-		Player testPlayer1 = new HumanPlayer("TestPlayer1", "CYAN", 5, 5);
-		Player testPlayer2 = new HumanPlayer("TestPlayer2", "PINK", 6, 6);
-		Player testPlayer3 = new HumanPlayer("TestPlayer3", "ORANGE", 7, 7);
+		Player testPlayer1 = new HumanPlayer("TestPlayer1", Color.CYAN, 5, 5);
+		Player testPlayer2 = new HumanPlayer("TestPlayer2", Color.PINK, 6, 6);
+		Player testPlayer3 = new HumanPlayer("TestPlayer3", Color.ORANGE, 7, 7);
 		
 		Card p1Room = new Card("p1Room", CardType.ROOM);
 		Card p2Room = new Card("p2Room", CardType.ROOM);

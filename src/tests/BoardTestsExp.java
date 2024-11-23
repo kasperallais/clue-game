@@ -23,7 +23,6 @@ public class BoardTestsExp {
         board.findAdj(cell);
         Set<TestBoardCell> adjList = cell.getAdjList();
         assertEquals(2, adjList.size());
-        //System.out.println()
         assertTrue(adjList.contains(board.getCell(0, 1)));
         assertTrue(adjList.contains(board.getCell(1, 0)));
     }

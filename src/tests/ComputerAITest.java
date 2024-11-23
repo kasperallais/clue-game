@@ -3,6 +3,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ class ComputerAITest {
 	
 	@Test
 	public void testCreateSuggestion() {
-	    ComputerPlayer player = new ComputerPlayer("Test AI", "Blue", 5, 5);
+	    ComputerPlayer player = new ComputerPlayer("Test AI", Color.BLUE, 5, 5);
 
 	    // Set up the current room
 	    Room currentRoom = new Room("Library");
@@ -59,7 +60,7 @@ class ComputerAITest {
 
 	@Test
 	public void testSelectTargets() {
-	    ComputerPlayer player = new ComputerPlayer("Test AI", "Blue", 5, 5);
+	    ComputerPlayer player = new ComputerPlayer("Test AI", Color.BLUE, 5, 5);
 
 	    // Create a set of possible targets
 	    Set<BoardCell> targets = new HashSet<>();
