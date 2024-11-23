@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
@@ -175,7 +176,9 @@ public class GameControlPanel extends JPanel {
     private class AccusationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	
+        	if (!board.isHumanMustFinish()) {
+        		board.doAccusation();
+        	}
         }
     }
 }

@@ -11,9 +11,6 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
@@ -98,7 +95,44 @@ public class Board extends JPanel{
             repaint();
         }
     }
+    
+    public void doAccusation() {
+    	SuggestionPanel accusationDialog = new SuggestionPanel(
+                (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
+               "", true, "Make an Accusation"
+            );
 
+    	accusationDialog.setVisible(true);
+            
+            String room = accusationDialog.getSelectedRoom();
+            String person = accusationDialog.getSelectedPerson();
+            String weapon = accusationDialog.getSelectedWeapon();
+            Card roomCard = null;
+            Card personCard = null;
+            Card weaponCard = null;
+            
+            for (Card c: fullDeck) {
+            	if (c.getName().equals(room)) {
+            		roomCard = c;
+            	}
+            	else if (c.getName().equals(person)) {
+            		personCard = c;
+            	}
+            	else if (c.getName().equals(weapon)) {
+            		weaponCard = c;
+            	}
+            }
+            
+            // this works i just dont know how to end the game
+            if (this.checkAccusation(roomCard, personCard, weaponCard)) {
+            	// end game player won I just dont know how to end the game
+            	System.out.println("Check won");
+            } 
+            else if (this.checkAccusation(roomCard, personCard, weaponCard) == false) {
+            	// end game player lost
+            	System.out.println("Check lost");
+            }
+    }
 
     public boolean isHumanMustFinish() {
         return humanMustFinish;
@@ -151,7 +185,7 @@ public class Board extends JPanel{
                     Room currentRoom = getRoom(clickedCell); // Retrieve the room object
                     SuggestionPanel suggestionDialog = new SuggestionPanel(
                         (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
-                        currentRoom.getName()
+                        currentRoom.getName(), false, "Make a Suggestion"
                     );
 
                     suggestionDialog.setVisible(true); // Display the dialog
@@ -167,11 +201,28 @@ public class Board extends JPanel{
                         Card weaponCard = new Card(weapon, CardType.WEAPON);
 
                         Card disprovingCard = handleSuggestion(humanPlayer, roomCard, personCard, weaponCard);
-
-                        // Display the result
-                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
-                        if (disprovingCard != null) {
-                        	controlPanel.setGuessResult(disprovingCard);
+                        
+                        if (!suggestionDialog.pressCancel()) {
+	                        // Display the result
+	                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
+	                        for (Room r: roomMap.values()) {
+	                        	if (r.getName().equals(roomCard.getName())) {
+	                        		System.out.println("CHeck found room");
+	                        		BoardCell rightRoom = r.getCenterCell();
+	                        		for (Player p: players) {
+	    	                        	if (p.getName().equals(personCard.getName())) {
+	    	                        		System.out.println("CHeck found person");
+	    	                        		p.setRow(rightRoom.getRow());
+	    	                        		p.setCol(rightRoom.getCol());
+	    	                        		repaint();
+	    	                        	}
+	    	                        }
+	                        	}
+	                        }
+	                        
+	                        if (disprovingCard != null) {
+	                        	controlPanel.setGuessResult(disprovingCard);
+	                        }
                         }
                     }
                 }
@@ -743,6 +794,13 @@ public class Board extends JPanel{
 	        			c.setColor(color);
 	        			cardPanel.addRoomHand(c);
 	        		}
+	        	}
+	        }
+	        else if (p instanceof ComputerPlayer) {
+	        	ArrayList<Card> cHand = p.getHand();
+	        	for (Card c: cHand) {
+	        		Color color = p.getColor();
+	        		c.setColor(color);
 	        	}
 	        }
 		}

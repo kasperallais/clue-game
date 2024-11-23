@@ -1,31 +1,48 @@
 package clueGame;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SuggestionPanel extends JDialog {
+	private JComboBox<String> roomComboBox;
     private JComboBox<String> personComboBox;
     private JComboBox<String> weaponComboBox;
     private JButton submitButton;
     private JButton cancelButton;
+    private boolean didPressCancel;
 
-    public SuggestionPanel(JFrame parent, String currentRoom) {
-        super(parent, "Make a Suggestion", true);
+    public SuggestionPanel(JFrame parent, String currentRoom, boolean checkAccusation, String title) {
+        super(parent, title, true);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-
-        // Current room label
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        add(new JLabel("Current room:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        add(new JLabel(currentRoom), gbc);
-
+        
+        if (!checkAccusation) {
+	        // Current room label
+	        gbc.gridx = 0;
+	        gbc.gridy = 0;
+	        add(new JLabel("Current room:"), gbc);
+	
+	        gbc.gridx = 1;
+	        gbc.gridy = 0;
+	        add(new JLabel(currentRoom), gbc);
+        } else {
+        	gbc.gridx = 0;
+	        gbc.gridy = 0;
+	        
+	        add(new JLabel("Room:"), gbc);
+	
+	        gbc.gridx = 1;
+	        gbc.gridy = 0;
+	        roomComboBox = new JComboBox<>(new String[] {"Library of Secrets", "Enchanted Garden", "Shadow Study", "Ballroom of Echos", 
+	        											 "The velvet Lounge", "The Gloomy Cellar", "The Hall of Mirrors", "The Crimson Parlor",
+	        											  "The Observatory Tower"});
+	        add(roomComboBox, gbc);
+        }
         // Person label and combo box
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -68,7 +85,18 @@ public class SuggestionPanel extends JDialog {
             }
         });
 
-        cancelButton.addActionListener(e -> dispose());
+        
+        cancelButton.addActionListener(e -> {
+            didPressCancel = true; // Set cancel flag
+            dispose();
+        });
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                didPressCancel = true; // Set cancel flag
+            }
+        });
 
         // Set dialog properties
         pack();
@@ -82,7 +110,7 @@ public class SuggestionPanel extends JDialog {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
 
-            SuggestionPanel dialog = new SuggestionPanel(frame, "Lounge");
+            SuggestionPanel dialog = new SuggestionPanel(frame, "Lounge", false, "Make a Suggestion");
             dialog.setVisible(true);
         });
     }
@@ -93,6 +121,14 @@ public class SuggestionPanel extends JDialog {
 
     public String getSelectedWeapon() {
         return (String) weaponComboBox.getSelectedItem();
+    }
+    
+    public String getSelectedRoom() {
+    	return (String) roomComboBox.getSelectedItem();
+    }
+    
+    public boolean pressCancel() {
+    	return this.didPressCancel;
     }
 
 }
