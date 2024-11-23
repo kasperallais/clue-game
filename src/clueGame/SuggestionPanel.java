@@ -21,6 +21,7 @@ public class SuggestionPanel extends JDialog {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         
+        // take in paramter to see if program wants to build the suggestion panel or accusation
         if (!checkAccusation) {
 	        // Current room label
 	        gbc.gridx = 0;

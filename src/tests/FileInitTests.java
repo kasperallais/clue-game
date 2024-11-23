@@ -25,7 +25,6 @@ public class FileInitTests {
 
     @Test
     public void testRoomLabels() {
-    	System.out.println("Check");
 		assertEquals("Library of Secrets", board.getRoom('L').getName() );
 		assertEquals("Enchanted Garden", board.getRoom('G').getName() );
 		assertEquals("Shadow Study", board.getRoom('S').getName() );
@@ -43,7 +42,6 @@ public class FileInitTests {
     public void testFourDoorDirections() {
     	// Doorway UP
 		BoardCell cell = board.getCell(5, 0);
-		System.out.println("Check");
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.UP, cell.getDoorDirection());
 		// Doorway DOWN
@@ -72,7 +70,6 @@ public class FileInitTests {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		System.out.println(numDoors);
 		Assert.assertEquals(10, numDoors);
 	}
 

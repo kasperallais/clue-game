@@ -97,6 +97,7 @@ public class Board extends JPanel{
     }
     
     public void doAccusation() {
+    	// create accusation panel
     	SuggestionPanel accusationDialog = new SuggestionPanel(
                 (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
                "", true, "Make an Accusation"
@@ -104,6 +105,7 @@ public class Board extends JPanel{
 
     	accusationDialog.setVisible(true);
             
+    		// get what the user selected in accusation panel
             String room = accusationDialog.getSelectedRoom();
             String person = accusationDialog.getSelectedPerson();
             String weapon = accusationDialog.getSelectedWeapon();
@@ -111,6 +113,7 @@ public class Board extends JPanel{
             Card personCard = null;
             Card weaponCard = null;
             
+            // loop through deck and find the three cards from the strings
             for (Card c: fullDeck) {
             	if (c.getName().equals(room)) {
             		roomCard = c;
@@ -202,16 +205,16 @@ public class Board extends JPanel{
 
                         Card disprovingCard = handleSuggestion(humanPlayer, roomCard, personCard, weaponCard);
                         
+                        // if the user didnt press cancel or X
                         if (!suggestionDialog.pressCancel()) {
 	                        // Display the result
 	                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
+	                        // find the room and person and move the person to that room
 	                        for (Room r: roomMap.values()) {
 	                        	if (r.getName().equals(roomCard.getName())) {
-	                        		System.out.println("CHeck found room");
 	                        		BoardCell rightRoom = r.getCenterCell();
 	                        		for (Player p: players) {
 	    	                        	if (p.getName().equals(personCard.getName())) {
-	    	                        		System.out.println("CHeck found person");
 	    	                        		p.setRow(rightRoom.getRow());
 	    	                        		p.setCol(rightRoom.getCol());
 	    	                        		repaint();
