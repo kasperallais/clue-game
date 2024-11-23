@@ -104,6 +104,8 @@ public class Board extends JPanel{
             );
 
     	accusationDialog.setVisible(true);
+    	
+    	if (!accusationDialog.pressCancel()) {
             
     		// get what the user selected in accusation panel
             String room = accusationDialog.getSelectedRoom();
@@ -135,6 +137,7 @@ public class Board extends JPanel{
             	// end game player lost
             	System.out.println("Check lost");
             }
+    	}
     }
 
     public boolean isHumanMustFinish() {
