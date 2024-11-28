@@ -1,3 +1,99 @@
+commit f6ca71e8d212d56a5aa2be56918c475a7128133e
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Wed Nov 27 19:18:09 2024 -0600
+
+    Finished the assingment
+
+commit 5e18b588eaa4b36a496193178be61c437dd06470
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sat Nov 23 16:32:45 2024 -0700
+
+    Forgot to add cancel implementation to accusation but now the game has it
+
+commit 6ecc6420e13371e116177af62ee676dccbe77982
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sat Nov 23 16:29:46 2024 -0700
+
+    Finished the accusation panel implementation
+
+commit eece11e8072f816066729bac5de6207481e0d3dc
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sat Nov 23 16:24:39 2024 -0700
+
+    Fixed errors in tests and took out some testing print lines
+
+commit 2f652bf63d58aee79039ce70522cfb93a189ef61
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sat Nov 23 16:17:02 2024 -0700
+
+    Initiated players to better starting positions
+
+commit 825bb3954f8f44fbacf281f06f54f61e39041dbb
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Sat Nov 23 16:14:19 2024 -0700
+
+    Got players to move on suggestion
+
+commit ff50d4570d08e92aa8b822b2d63cb16222c05c7c
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:34:04 2024 -0700
+
+    Created new SuggestionPanel class and added methods
+
+commit 3ac6bdbfd187fac38b0dcadac6c75da6bf6c097c
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:33:43 2024 -0700
+
+    Changed setGuess and setGuessResult methods
+
+commit 38444f9e10e64117eacea10ec3ac4ab02edea6cb
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:33:14 2024 -0700
+
+    Remove getColor() method
+
+commit 8c11f58e7dbc0a9d84879758c49635d5a843ea3f
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:32:34 2024 -0700
+
+    Changed color to Color instead of String
+
+commit 22693c31227f711d2baf8fdcbf18522eed101be1
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:32:08 2024 -0700
+
+    Changed color instance to Color instead of String
+
+commit e6e2eb0227add40bf9288f4283d4eabcda7c76eb
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:31:23 2024 -0700
+
+    Added setCardPanel() call
+
+commit bb1c093b1eee7b897d0ef001be6b13d09b6b91f3
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:29:44 2024 -0700
+
+    Changed color instance to Color instead of String
+
+commit 0badfd876b8b83c74668a1e86dcafbcf1a086a37
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 20:29:04 2024 -0700
+
+    Added method to deal the cards and convertColor() method and suggestionDiaglog
+
+commit 8c163e438bb2c9ced8c23d01e3246eba33587d28
+Author: kasperallais <kasper.allais@gmail.com>
+Date:   Thu Nov 21 17:53:48 2024 -0700
+
+    Renamed SuggestionBoard
+
+commit 65de2e00f0d839919cad52b12ba518bef7a1c234
+Author: “Michael <“michael_tetreault@mines.edu”>
+Date:   Thu Nov 21 15:30:06 2024 -0700
+
+    made some changes
+
 commit fbdef55a9a75176519808b82509a32aecb63a514
 Merge: 6dac5e6 43d2bab
 Author: “Michael <“michael_tetreault@mines.edu”>
