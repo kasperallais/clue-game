@@ -69,13 +69,40 @@ public class Board extends JPanel{
         controlPanel.setTurn(currentPlayer, diceRoll);
 
         if (currentPlayer instanceof ComputerPlayer) {
-            // Computer player's turn
             ComputerPlayer computerPlayer = (ComputerPlayer) currentPlayer;
+
+            if (computerPlayer.isReadyToAccuse()) {
+                // Computer makes an accusation
+                Solution accusation = computerPlayer.getAccusation();
+                boolean accusationResult = checkAccusation(accusation.getRoom(), accusation.getPerson(), accusation.getWeapon());
+
+                // Display the accusation
+                JOptionPane.showMessageDialog(null, computerPlayer.getName() + " accuses " +
+                        accusation.getPerson().getName() + " in the " + accusation.getRoom().getName() +
+                        " with the " + accusation.getWeapon().getName() + ".", "Accusation", JOptionPane.INFORMATION_MESSAGE);
+
+                if (accusationResult) {
+                    // Accusation correct, computer wins
+                    JOptionPane.showMessageDialog(null, computerPlayer.getName() + " has won the game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0); // End the game
+                } else {
+                    // Accusation incorrect, computer loses
+                    JOptionPane.showMessageDialog(null, computerPlayer.getName() + " made a wrong accusation and is out of the game.", "Accusation Incorrect", JOptionPane.INFORMATION_MESSAGE);
+                    computerPlayer.setIsOut(true);
+                }
+                return; // Move to next player
+            }
+
+            // Existing movement and suggestion code...
+            // Calculate targets
+            BoardCell startCell1 = getCell(currentPlayer.getRow(), currentPlayer.getCol());
+            calcTargets(startCell1, diceRoll);
+
             // Computer selects a target
             BoardCell targetCell = computerPlayer.selectTargets(targets);
 
             // Before moving, set current cell to unoccupied
-            startCell.setOccupied(false);
+            startCell1.setOccupied(false);
             // Move the player to the selected target
             currentPlayer.setRow(targetCell.getRow());
             currentPlayer.setCol(targetCell.getCol());
@@ -84,7 +111,37 @@ public class Board extends JPanel{
 
             // Repaint the board
             repaint();
-        } else if (currentPlayer instanceof HumanPlayer) {
+
+            // Check if target cell is a room
+            if (targetCell.isRoom()) {
+                // Create a suggestion
+                Room currentRoom = getRoom(targetCell);
+                Solution suggestion = computerPlayer.createSuggestion(currentRoom);
+
+                // Display the suggestion
+                controlPanel.setGuess(suggestion.getPerson(), suggestion.getRoom(), suggestion.getWeapon(), computerPlayer.getColor());
+
+                // Move the suggested player to the room
+                moveSuggestedPlayerToRoom(suggestion.getPerson().getName(), currentRoom.getCenterCell());
+
+                // Handle the suggestion
+                DisproveResult result = handleSuggestion(computerPlayer, suggestion.getRoom(), suggestion.getPerson(), suggestion.getWeapon());
+
+                if (result != null) {
+                    // Suggestion was disproved
+                    controlPanel.setGuessResult("Suggestion disproved by " + result.getDisprovingPlayer().getName());
+                    computerPlayer.setLastSuggestionDisproved(true);
+                } else {
+                    // No one could disprove
+                    controlPanel.setGuessResult("No new clue");
+                    computerPlayer.setLastSuggestionDisproved(false);
+                    // Prepare for accusation
+                    computerPlayer.setReadyToAccuse(true);
+                    computerPlayer.setAccusation(suggestion);
+                }
+            }
+        }
+        else if (currentPlayer instanceof HumanPlayer) {
             // Human player's turn
             humanMustFinish = true;
             
@@ -97,48 +154,49 @@ public class Board extends JPanel{
     }
     
     public void doAccusation() {
-    	// create accusation panel
-    	SuggestionPanel accusationDialog = new SuggestionPanel(
-                (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
-               "", true, "Make an Accusation"
-            );
+        // Create accusation panel
+        SuggestionPanel accusationDialog = new SuggestionPanel(
+            (JFrame) SwingUtilities.getWindowAncestor(Board.this), 
+           "", true, "Make an Accusation"
+        );
 
-    	accusationDialog.setVisible(true);
-    	
-    	if (!accusationDialog.pressCancel()) {
-            
-    		// get what the user selected in accusation panel
+        accusationDialog.setVisible(true);
+
+        if (!accusationDialog.pressCancel()) {
+            // Get what the user selected in accusation panel
             String room = accusationDialog.getSelectedRoom();
             String person = accusationDialog.getSelectedPerson();
             String weapon = accusationDialog.getSelectedWeapon();
             Card roomCard = null;
             Card personCard = null;
             Card weaponCard = null;
-            
-            // loop through deck and find the three cards from the strings
-            for (Card c: fullDeck) {
-            	if (c.getName().equals(room)) {
-            		roomCard = c;
-            	}
-            	else if (c.getName().equals(person)) {
-            		personCard = c;
-            	}
-            	else if (c.getName().equals(weapon)) {
-            		weaponCard = c;
-            	}
+
+            // Loop through deck and find the three cards from the strings
+            for (Card c : fullDeck) {
+                if (c.getName().equals(room)) {
+                    roomCard = c;
+                } else if (c.getName().equals(person)) {
+                    personCard = c;
+                } else if (c.getName().equals(weapon)) {
+                    weaponCard = c;
+                }
             }
-            
-            // this works i just dont know how to end the game
-            if (this.checkAccusation(roomCard, personCard, weaponCard)) {
-            	// end game player won I just dont know how to end the game
-            	System.out.println("Check won");
-            } 
-            else if (this.checkAccusation(roomCard, personCard, weaponCard) == false) {
-            	// end game player lost
-            	System.out.println("Check lost");
+
+            boolean accusationResult = checkAccusation(roomCard, personCard, weaponCard);
+
+            String message = "Your accusation was ";
+
+            if (accusationResult) {
+                message += "correct! You have won the game!";
+            } else {
+                message += "incorrect. You have lost the game.";
             }
-    	}
+
+            JOptionPane.showMessageDialog(null, message, "Accusation Result", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0); // End the game
+        }
     }
+
 
     public boolean isHumanMustFinish() {
         return humanMustFinish;
@@ -201,36 +259,31 @@ public class Board extends JPanel{
                     String weapon = suggestionDialog.getSelectedWeapon();
 
                     if (person != null && weapon != null) {
-                        // Process the suggestion (example: use handleSuggestion method)
+                        // Process the suggestion
                         Card roomCard = new Card(currentRoom.getName(), CardType.ROOM);
                         Card personCard = new Card(person, CardType.PERSON);
                         Card weaponCard = new Card(weapon, CardType.WEAPON);
 
-                        Card disprovingCard = handleSuggestion(humanPlayer, roomCard, personCard, weaponCard);
-                        
-                        // if the user didnt press cancel or X
-                        if (!suggestionDialog.pressCancel()) {
-	                        // Display the result
-	                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
-	                        // find the room and person and move the person to that room
-	                        for (Room r: roomMap.values()) {
-	                        	if (r.getName().equals(roomCard.getName())) {
-	                        		BoardCell rightRoom = r.getCenterCell();
-	                        		for (Player p: players) {
-	    	                        	if (p.getName().equals(personCard.getName())) {
-	    	                        		p.setRow(rightRoom.getRow());
-	    	                        		p.setCol(rightRoom.getCol());
-	    	                        		repaint();
-	    	                        	}
-	    	                        }
-	                        	}
-	                        }
-	                        
-	                        if (disprovingCard != null) {
-	                        	controlPanel.setGuessResult(disprovingCard);
-	                        }
+                        // Display the suggestion
+                        controlPanel.setGuess(personCard, roomCard, weaponCard, humanPlayer.getColor());
+
+                        // Move the suggested person to the room
+                        moveSuggestedPlayerToRoom(personCard.getName(), currentRoom.getCenterCell());
+
+                        // Handle the suggestion
+                        DisproveResult result = handleSuggestion(humanPlayer, roomCard, personCard, weaponCard);
+
+                        if (result != null) {
+                            // Someone disproved the suggestion
+                            controlPanel.setGuessResult(result.getDisprovingCard());
+                            JOptionPane.showMessageDialog(null, result.getDisprovingPlayer().getName() + " has disproved your suggestion.", "Suggestion Result", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            // No one could disprove
+                            controlPanel.setGuessResult("No new clue");
+                            JOptionPane.showMessageDialog(null, "No one could disprove your suggestion.", "Suggestion Result", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
+
                 }
 
                 // Finish the human player's turn
@@ -324,10 +377,10 @@ public class Board extends JPanel{
 	    }
 	}
 
-	// helper function for findAdj which makes sure spots near doors work
 	private void addDoorwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
+	    // Add adjacent walkways
 	    addAdjacentWalkways(row, col, adjacencies);
-	    
+
 	    DoorDirection direction = getCell(row, col).getDoorDirection();
 	    int targetRow = row, targetCol = col;
 
@@ -336,16 +389,17 @@ public class Board extends JPanel{
 	        case UP -> targetRow--;
 	        case RIGHT -> targetCol++;
 	        case LEFT -> targetCol--;
+	        default -> {}
 	    }
-	    
-	    if (isInBounds(targetRow, targetCol) 
-	        && getCell(targetRow, targetCol).getInitial() != 'X'
-	        && getCell(targetRow, targetCol).getInitial() != 'W') {
-	        char init = getCell(targetRow, targetCol).getInitial();
-	        BoardCell roomCenter = roomMap.get(init).getCenterCell();
-	        adjacencies.add(roomCenter);
+
+	    if (isInBounds(targetRow, targetCol)) {
+	        BoardCell roomCell = getCell(targetRow, targetCol);
+	        if (roomCell.isRoom()) {
+	            adjacencies.add(roomCell); // Add the actual room cell adjacent to the doorway
+	        }
 	    }
 	}
+
 	
 	// helper function for findAdj 
 	private void addWalkwayAdjacencies(int row, int col, Set<BoardCell> adjacencies) {
@@ -374,14 +428,17 @@ public class Board extends JPanel{
 	    BoardCell currentCell = getCell(row, col);
 	    Room room = roomMap.get(currentCell.getInitial());
 
+	    // Add secret passage if available
 	    if (room.getHasSecretPassage()) {
 	        adjacencies.add(room.getSecretPassageCell());
 	    }
-	    
+
+	    // Add door cells adjacent to the room
 	    for (BoardCell doorCell : room.getDoorCells()) {
 	        adjacencies.add(doorCell);
 	    }
 	}
+
 
 	// check to see if spot is in the board
 	private boolean isInBounds(int row, int col) {
@@ -490,88 +547,77 @@ public class Board extends JPanel{
 	
 	// go through the layout file and load in the board into a 2d array
 	public void loadLayoutConfig() throws BadConfigFormatException {
-		try {
-			File file = new File(layoutConfigFile);
-			Scanner reader = new Scanner(file);
-			List<String[]> lines = new ArrayList<>();
-			while (reader.hasNextLine()) {
-				String line = reader.nextLine().trim();
-				String[] cells = line.split(",");
-				lines.add(cells);
-			}
-			reader.close();
-			// Set the dimensions of the board
-			numRows = lines.size();
-			numColumns = lines.get(0).length;
-			grid = new BoardCell[numRows][numColumns];
+	    try {
+	        File file = new File(layoutConfigFile);
+	        Scanner reader = new Scanner(file);
+	        List<String[]> lines = new ArrayList<>();
+	        while (reader.hasNextLine()) {
+	            String line = reader.nextLine().trim();
+	            String[] cells = line.split(",");
+	            lines.add(cells);
+	        }
+	        reader.close();
+	        // Set the dimensions of the board
+	        numRows = lines.size();
+	        numColumns = lines.get(0).length;
+	        grid = new BoardCell[numRows][numColumns];
 
-			// Loop through the layout lines and populate the grid
-			for (int row = 0; row < numRows; row++) {
-				String[] rowCells = lines.get(row);
-				if (rowCells.length != numColumns) {
-					throw new BadConfigFormatException("Row length mismatch in layout config");
-				}
-				for (int col = 0; col < numColumns; col++) {
-					char cellInitial = rowCells[col].charAt(0);
-					BoardCell cell = new BoardCell(row, col);
-					cell.setInitial(cellInitial);
+	        // Loop through the layout lines and populate the grid
+	        for (int row = 0; row < numRows; row++) {
+	            String[] rowCells = lines.get(row);
+	            if (rowCells.length != numColumns) {
+	                throw new BadConfigFormatException("Row length mismatch in layout config");
+	            }
+	            for (int col = 0; col < numColumns; col++) {
+	                String cellCode = rowCells[col];
+	                char cellInitial = cellCode.charAt(0);
+	                BoardCell cell = new BoardCell(row, col);
+	                cell.setInitial(cellInitial);
 
-					if (roomMap.containsKey(cellInitial)) {
-						Room room = roomMap.get(cellInitial);
-						cell.setRoom(true);
-						cell.setRoomName(room.getName());
-						// Check for special characters for doorways, labels, centers
-						if (rowCells[col].contains("#")) {
-							cell.setLabel(true);
-							room.setLabelCell(cell);
-						}
-						if (rowCells[col].contains("*")) {
-							cell.setRoomCenter(true);
-							room.setCenterCell(cell);
-						}
-						
-						if (rowCells[col].charAt(0) == 'W') {
-							cell.setWalkway(true);
-						}
-						
-						// Set doorway direction based on characters like ^, v, <, >
-						if (rowCells[col].contains("^")) {
-							cell.setDoorway(true);
-							cell.setDoorDirection(DoorDirection.UP);
-						} else if (rowCells[col].contains("v")) {
-							cell.setDoorway(true);
-							cell.setDoorDirection(DoorDirection.DOWN);
-						} else if (rowCells[col].contains("<")) {
-							cell.setDoorway(true);
-							cell.setDoorDirection(DoorDirection.LEFT);
-						} else if (rowCells[col].contains(">")) {
-							cell.setDoorway(true);
-							cell.setDoorDirection(DoorDirection.RIGHT);
-						}
-						
-						if (rowCells[col].length() > 1) {
-							if (Character.isUpperCase(rowCells[col].charAt(1))) {
-							    cell.setSecretPassage(rowCells[col].charAt(1));
-							} 
-						}
-						
-					} else if (cellInitial == 'W') {
-						cell.setWalkway(true);
-					} else if (cellInitial == 'X') {
-						continue;
-					}
-					else if(!(legendMap.containsKey(cellInitial))) {
-						throw new BadConfigFormatException("Invalid Layout");
-					}
+	                if (cellInitial == 'W') {
+	                    // It's a walkway
+	                    cell.setWalkway(true);
+	                } else if (roomMap.containsKey(cellInitial)) {
+	                    // It's a room
+	                    cell.setRoom(true);
+	                    cell.setRoomName(roomMap.get(cellInitial).getName());
+	                } else if (cellInitial == 'X') {
+	                    // Unused cell
+	                    // You may want to handle unused cells if necessary
+	                } else {
+	                    throw new BadConfigFormatException("Invalid cell initial: " + cellInitial);
+	                }
 
-					grid[row][col] = cell;
-				}
-			}
+	                // Check for special characters for doorways, labels, centers, secret passages
+	                if (cellCode.length() > 1) {
+	                    for (int i = 1; i < cellCode.length(); i++) {
+	                        char c = cellCode.charAt(i);
+	                        if (c == '#') {
+	                            cell.setLabel(true);
+	                            roomMap.get(cellInitial).setLabelCell(cell);
+	                        } else if (c == '*') {
+	                            cell.setRoomCenter(true);
+	                            roomMap.get(cellInitial).setCenterCell(cell);
+	                        } else if (c == '^' || c == 'v' || c == '<' || c == '>') {
+	                            setDoorDirection(cell, c);
+	                        } else if (Character.isUpperCase(c)) {
+	                            cell.setSecretPassage(c);
+	                            cell.setHasSecretPassage(true);
+	                        }
+	                    }
+	                }
 
-		} catch (FileNotFoundException e) {
-			throw new BadConfigFormatException("Layout config file not found");
-		}
-		
+	                grid[row][col] = cell;
+	            }
+	        }
+
+	        // Set up doorways into rooms
+	        setupDoorways();
+
+	    } catch (FileNotFoundException e) {
+	        throw new BadConfigFormatException("Layout config file not found");
+	    }
+
 		// loops through grid to find the doorways into rooms and then setting a cell in the room class to that cell
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
@@ -606,44 +652,119 @@ public class Board extends JPanel{
 		}
 	}
     
-    // start a serach for all targets within a certian amount of space depending on roll
-    public void calcTargets(BoardCell startCell, int pathLength) {
-    	visited = new HashSet<BoardCell>();
-		targets = new HashSet<BoardCell>();
-		findAllTargets(startCell, pathLength);
-    }
+	private void setDoorDirection(BoardCell cell, char directionChar) {
+	    cell.setDoorway(true);
+	    switch (directionChar) {
+	        case '^':
+	            cell.setDoorDirection(DoorDirection.UP);
+	            break;
+	        case 'v':
+	            cell.setDoorDirection(DoorDirection.DOWN);
+	            break;
+	        case '<':
+	            cell.setDoorDirection(DoorDirection.LEFT);
+	            break;
+	        case '>':
+	            cell.setDoorDirection(DoorDirection.RIGHT);
+	            break;
+	        default:
+	            cell.setDoorDirection(DoorDirection.NONE);
+	    }
+	}
+
+	private void setupDoorways() {
+	    for (int i = 0; i < numRows; i++) {
+	        for (int j = 0; j < numColumns; j++) {
+	            BoardCell doorCell = grid[i][j];
+	            if (doorCell.isDoorway()) {
+	                int roomRow = i;
+	                int roomCol = j;
+	                switch (doorCell.getDoorDirection()) {
+	                    case UP:
+	                        roomRow--;
+	                        break;
+	                    case DOWN:
+	                        roomRow++;
+	                        break;
+	                    case LEFT:
+	                        roomCol--;
+	                        break;
+	                    case RIGHT:
+	                        roomCol++;
+	                        break;
+	                    default:
+	                        break;
+	                }
+	                if (isInBounds(roomRow, roomCol)) {
+	                    BoardCell roomCell = grid[roomRow][roomCol];
+	                    if (roomCell.isRoom()) {
+	                        Room room = roomMap.get(roomCell.getInitial());
+	                        room.setDoorwayCell(doorCell);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
+
+	
+	
+	public void calcTargets(BoardCell startCell, int pathLength) {
+	    visited = new HashSet<>();
+	    targets = new HashSet<>();
+
+	    findAllTargets(startCell, pathLength);
+
+	    Player currentPlayer = players.get(currentPlayerIndex);
+
+	    if (currentPlayer.isMovedBySuggestion() && startCell.isRoom()) {
+	        // Allow staying in the room to make a suggestion
+	        targets.add(startCell);
+	        // Do not reset movedBySuggestion here; reset it after the player makes their move
+	    }
+
+	    // Debug: Print out the targets
+	    System.out.println("Targets for player " + currentPlayer.getName() + " at (" + startCell.getRow() + ", " + startCell.getCol() + "):");
+	    for (BoardCell cell : targets) {
+	        System.out.println(" - (" + cell.getRow() + ", " + cell.getCol() + ") Initial: " + cell.getInitial());
+	    }
+	}
+
+
     
     // recursive function to find all nearby spots
 	public void findAllTargets(BoardCell startCell, int pathLength) {
-		// Find adjacent cells of parameter cell each time
-		//findAdj();
-		
-		// get the adjacent cell list
-		int row = startCell.getRow();
-		int col = startCell.getCol();
-		Set<BoardCell> adjlist = getAdjList(row,col);
-		// add the parameter cell to visited
-		visited.add(startCell);
-		for (BoardCell cell: adjlist) {
-			if (visited.contains(cell)) {
-				continue;
-			}
-			visited.add(cell);
-			if (pathLength == 1 && !(cell.getOccupied())) {
-				targets.add(cell);
-			}else if (cell.getInitial() == 'W' && !(cell.getOccupied())) {
-				findAllTargets(cell, (pathLength-1));
-			}else if (cell.getInitial() != 'W' && cell.getInitial() != 'X') {
-				char init = cell.getInitial();
-				BoardCell temp = roomMap.get(init).getCenterCell();
-				if (!targets.contains(temp)) {
-					targets.add(temp);
-				}
-			}
+	    visited.add(startCell);
 
-			visited.remove(cell);
-		}
+	    Set<BoardCell> adjacents = getAdjList(startCell.getRow(), startCell.getCol());
+
+	    for (BoardCell adjCell : adjacents) {
+	        if (visited.contains(adjCell) || adjCell.getOccupied()) {
+	            continue;
+	        }
+
+	        visited.add(adjCell);
+
+	        if (adjCell.isDoorway()) {
+	            // If we enter a doorway, add the room beyond it to targets
+	            if (pathLength == 1) {
+	                targets.add(adjCell);
+	            } else {
+	                findAllTargets(adjCell, pathLength - 1);
+	            }
+	        } else if (adjCell.isRoom() && !startCell.isRoom()) {
+	            // If moving into a room from a doorway, stop
+	            targets.add(adjCell);
+	        } else if (pathLength == 1) {
+	            targets.add(adjCell);
+	        } else {
+	            findAllTargets(adjCell, pathLength - 1);
+	        }
+
+	        visited.remove(adjCell);
+	    }
 	}
+
 	
 	// make the solution and deal the cards out to players
     public void dealCards() {
@@ -695,25 +816,19 @@ public class Board extends JPanel{
     	return false;
     }
     
-    // check to see if a suggestion can be disproven or not
-    public Card handleSuggestion(Player suggester, Card suggRoom, Card suggPerson, Card SuggWeapon) {
-    	for (Player currentPlayer: players) {
-    		// looping through players and running the method to see if a player can disprove the suggestion
-    		Card returned = currentPlayer.disproveSuggestion(suggRoom, suggPerson, SuggWeapon);
-    		if (returned == null) {
-    			continue;
-    		}
-    		if (!returned.getName().equals(null)) {
-    			if (currentPlayer.getName().equals(suggester.getName())) {
-    				continue;
-    			} else {
-    				return returned;
-    			}
-    		}
-    	}
-    	
-    	return null;
+    public DisproveResult handleSuggestion(Player suggester, Card suggRoom, Card suggPerson, Card suggWeapon) {
+        for (Player currentPlayer : players) {
+            if (currentPlayer.equals(suggester)) {
+                continue; // Skip the suggester
+            }
+            Card returned = currentPlayer.disproveSuggestion(suggRoom, suggPerson, suggWeapon);
+            if (returned != null) {
+                return new DisproveResult(returned, currentPlayer);
+            }
+        }
+        return null; // No one can disprove
     }
+
     
     public void addTestingPlayers() {
     	players.clear();
@@ -822,4 +937,23 @@ public class Board extends JPanel{
 	public static Board getInstance() {
 		return theInstance;
 	}
+	
+	public void moveSuggestedPlayerToRoom(String playerName, BoardCell roomCell) {
+	    for (Player player : players) {
+	        if (player.getName().equals(playerName)) {
+	            // Update player's position
+	            player.setRow(roomCell.getRow());
+	            player.setCol(roomCell.getCol());
+	            player.setMovedBySuggestion(true); // We'll use this later
+	            repaint();
+	            break;
+	        }
+	    }
+	}
+	
+	public int getCurrentPlayerIndex() {
+	    return currentPlayerIndex;
+	}
+
+
 }

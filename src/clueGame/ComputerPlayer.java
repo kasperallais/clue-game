@@ -7,6 +7,9 @@ import java.util.Set;
 import java.awt.Color;
 
 public class ComputerPlayer extends Player{
+	private boolean readyToAccuse = false;
+	private Solution accusation;
+	
 	public ComputerPlayer(String name, Color color, int row, int col) {
 		super(name, color, row, col);
 	}
@@ -60,4 +63,25 @@ public class ComputerPlayer extends Player{
 	    }
 	}
 
+	public boolean isReadyToAccuse() {
+	    return readyToAccuse;
+	}
+
+	public void setReadyToAccuse(boolean readyToAccuse) {
+	    this.readyToAccuse = readyToAccuse;
+	}
+
+	public Solution getAccusation() {
+	    return accusation;
+	}
+
+	public void setAccusation(Solution accusation) {
+	    this.accusation = accusation;
+	}
+
+	public void setLastSuggestionDisproved(boolean wasDisproved) {
+	    if (!wasDisproved && !getHand().contains(accusation.getRoom())) {
+	        readyToAccuse = true;
+	    }
+	}
 }

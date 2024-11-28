@@ -15,6 +15,9 @@ public abstract class Player {
     private int col;
     private ArrayList<Card> hand;
     private Set<Card> seenCards;
+    private boolean isOut = false;
+    private boolean movedBySuggestion = false;
+
 
     Player(String name, Color color, int row, int col){
         this.name = name;
@@ -128,5 +131,21 @@ public abstract class Player {
 
 	public void setCol(int col) {
 		this.col = col;
+	}
+	
+	public boolean isOut() {
+	    return isOut;
+	}
+
+	public void setIsOut(boolean isOut) {
+	    this.isOut = isOut;
+	}
+	
+	public boolean isMovedBySuggestion() {
+	    return movedBySuggestion;
+	}
+
+	public void setMovedBySuggestion(boolean movedBySuggestion) {
+	    this.movedBySuggestion = movedBySuggestion;
 	}
 }

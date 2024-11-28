@@ -151,10 +151,17 @@ public class GameControlPanel extends JPanel {
         this.guessText.setText(c1.getName() + ", " + c2.getName() + ", " + c3.getName());
     }
 
-    public void setGuessResult(Card card) {
-        this.responseText.setText(card.getName());
-        this.responseText.setBackground(card.getColor());
+    public void setGuessResult(Object result) {
+        if (result instanceof Card) {
+            Card card = (Card) result;
+            this.responseText.setText(card.getName());
+            this.responseText.setBackground(card.getColor());
+        } else if (result instanceof String) {
+            this.responseText.setText((String) result);
+            this.responseText.setBackground(Color.WHITE);
+        }
     }
+
 
     public void setTurn(Player player, int roll) {
         this.nameLabel.setText(player.getName());
@@ -176,9 +183,16 @@ public class GameControlPanel extends JPanel {
     private class AccusationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-        	if (!board.isHumanMustFinish()) {
-        		board.doAccusation();
-        	}
+            if (board.getCurrentPlayerIndex() != 0) {
+                JOptionPane.showMessageDialog(null, "It's not your turn!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!board.isHumanMustFinish()) {
+                board.doAccusation();
+            } else {
+                JOptionPane.showMessageDialog(null, "You must finish your move before making an accusation.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
+
 }

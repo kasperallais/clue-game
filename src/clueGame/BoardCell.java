@@ -19,7 +19,16 @@ public class BoardCell {
     private boolean roomCenter;
     private char secretPassage = ' ';
     private Set<BoardCell> adjList;
+    private boolean hasSecretPassage;
 
+    public void setHasSecretPassage(boolean hasSecretPassage) {
+        this.hasSecretPassage = hasSecretPassage;
+    }
+
+    public boolean getHasSecretPassage() {
+        return hasSecretPassage;
+    }
+    
     private boolean isHighlighted = false;
 
     public boolean isHighlighted() {
